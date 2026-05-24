@@ -1,0 +1,247 @@
+{
+  "castle": {
+    "id": "castle",
+    "displayName": "Castelo",
+    "category": "core",
+    "description": "Centro da cidade, limite de evolução e capacidade de comando.",
+    "maxLevel": 5,
+    "footprint": [6, 6],
+    "levels": [
+      { "level": 1, "power": 80, "marchCapacity": 120, "cost": {}, "buildSeconds": 0 },
+      { "level": 2, "power": 180, "marchCapacity": 180, "cost": { "food": 260, "wood": 240, "stone": 160 }, "buildSeconds": 35 },
+      { "level": 3, "power": 340, "marchCapacity": 260, "cost": { "food": 520, "wood": 480, "stone": 320, "iron": 120 }, "buildSeconds": 90 },
+      { "level": 4, "power": 580, "marchCapacity": 380, "cost": { "food": 980, "wood": 900, "stone": 620, "iron": 260 }, "buildSeconds": 180 },
+      { "level": 5, "power": 900, "marchCapacity": 540, "cost": { "food": 1800, "wood": 1650, "stone": 1100, "iron": 520, "silver": 160 }, "buildSeconds": 360 }
+    ]
+  },
+  "academy": {
+    "id": "academy",
+    "displayName": "Academia",
+    "category": "internal",
+    "description": "Pesquisa economia, batalha, tecnologia e defesa.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 4,
+    "footprint": [4, 4],
+    "levels": [
+      { "level": 1, "researchSpeed": 0.02, "cost": { "wood": 80, "stone": 60 }, "buildSeconds": 12 },
+      { "level": 2, "researchSpeed": 0.04, "cost": { "food": 180, "wood": 180, "stone": 120 }, "buildSeconds": 38 },
+      { "level": 3, "researchSpeed": 0.07, "cost": { "food": 420, "wood": 380, "stone": 260, "iron": 90 }, "buildSeconds": 85 },
+      { "level": 4, "researchSpeed": 0.11, "cost": { "food": 900, "wood": 800, "stone": 560, "iron": 210 }, "buildSeconds": 170 }
+    ]
+  },
+  "university": {
+    "id": "university",
+    "displayName": "Universidade",
+    "category": "internal",
+    "description": "Aloca Greatmen em cargos estratégicos.",
+    "unlockAtCastleLevel": 2,
+    "maxLevel": 3,
+    "footprint": [4, 5],
+    "levels": [
+      { "level": 1, "greatmanSlots": 2, "cost": { "wood": 140, "stone": 120, "silver": 30 }, "buildSeconds": 25 },
+      { "level": 2, "greatmanSlots": 3, "cost": { "food": 360, "wood": 300, "stone": 240, "silver": 80 }, "buildSeconds": 70 },
+      { "level": 3, "greatmanSlots": 4, "cost": { "food": 760, "wood": 720, "stone": 520, "silver": 160 }, "buildSeconds": 150 }
+    ]
+  },
+  "barracks": {
+    "id": "barracks",
+    "displayName": "Quartéis",
+    "category": "military",
+    "description": "Treina infantaria, arqueiros, cavalaria e cerco.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 5,
+    "footprint": [5, 4],
+    "levels": [
+      { "level": 1, "trainingSpeed": 0, "unlocksTroopTier": 1, "cost": { "wood": 90, "stone": 50 }, "buildSeconds": 10 },
+      { "level": 2, "trainingSpeed": 0.03, "unlocksTroopTier": 1, "cost": { "food": 200, "wood": 180, "stone": 110 }, "buildSeconds": 35 },
+      { "level": 3, "trainingSpeed": 0.06, "unlocksTroopTier": 2, "cost": { "food": 460, "wood": 420, "stone": 260, "iron": 110 }, "buildSeconds": 90 },
+      { "level": 4, "trainingSpeed": 0.1, "unlocksTroopTier": 2, "cost": { "food": 880, "wood": 820, "stone": 520, "iron": 240 }, "buildSeconds": 160 },
+      { "level": 5, "trainingSpeed": 0.15, "unlocksTroopTier": 3, "cost": { "food": 1550, "wood": 1480, "stone": 940, "iron": 500, "silver": 120 }, "buildSeconds": 320 }
+    ]
+  },
+  "mobilization_camp": {
+    "id": "mobilization_camp",
+    "displayName": "Campo de Mobilização",
+    "category": "military",
+    "description": "Aumenta tropas enviadas por marcha.",
+    "unlockAtCastleLevel": 2,
+    "maxLevel": 3,
+    "footprint": [5, 4],
+    "levels": [
+      { "level": 1, "marchCapacityBonus": 40, "cost": { "food": 160, "wood": 120 }, "buildSeconds": 20 },
+      { "level": 2, "marchCapacityBonus": 90, "cost": { "food": 380, "wood": 300, "stone": 180 }, "buildSeconds": 65 },
+      { "level": 3, "marchCapacityBonus": 160, "cost": { "food": 840, "wood": 720, "stone": 420, "iron": 160 }, "buildSeconds": 150 }
+    ]
+  },
+  "hospital": {
+    "id": "hospital",
+    "displayName": "Hospital",
+    "category": "support",
+    "description": "Recupera parte dos soldados feridos.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 4,
+    "footprint": [4, 4],
+    "levels": [
+      { "level": 1, "woundedCapacity": 80, "cost": { "wood": 80, "food": 80 }, "buildSeconds": 12 },
+      { "level": 2, "woundedCapacity": 180, "cost": { "wood": 180, "food": 180, "stone": 90 }, "buildSeconds": 40 },
+      { "level": 3, "woundedCapacity": 360, "cost": { "wood": 420, "food": 420, "stone": 240 }, "buildSeconds": 95 },
+      { "level": 4, "woundedCapacity": 650, "cost": { "wood": 920, "food": 860, "stone": 520, "iron": 190 }, "buildSeconds": 180 }
+    ]
+  },
+  "warehouse": {
+    "id": "warehouse",
+    "displayName": "Depósito",
+    "category": "support",
+    "description": "Protege recursos contra saques.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 4,
+    "footprint": [4, 4],
+    "levels": [
+      { "level": 1, "protectedResources": 500, "cost": { "wood": 70, "stone": 70 }, "buildSeconds": 10 },
+      { "level": 2, "protectedResources": 1200, "cost": { "wood": 180, "stone": 140, "food": 120 }, "buildSeconds": 35 },
+      { "level": 3, "protectedResources": 2600, "cost": { "wood": 420, "stone": 360, "food": 300 }, "buildSeconds": 85 },
+      { "level": 4, "protectedResources": 5200, "cost": { "wood": 860, "stone": 760, "food": 680, "iron": 180 }, "buildSeconds": 160 }
+    ]
+  },
+  "embassy": {
+    "id": "embassy",
+    "displayName": "Embaixada",
+    "category": "alliance",
+    "description": "Recebe ajuda da aliança para reduzir tempos.",
+    "unlockAtCastleLevel": 2,
+    "maxLevel": 3,
+    "footprint": [4, 4],
+    "levels": [
+      { "level": 1, "allianceHelpCapacity": 5, "cost": { "wood": 180, "stone": 120, "silver": 30 }, "buildSeconds": 28 },
+      { "level": 2, "allianceHelpCapacity": 8, "cost": { "wood": 420, "stone": 280, "food": 260, "silver": 70 }, "buildSeconds": 75 },
+      { "level": 3, "allianceHelpCapacity": 12, "cost": { "wood": 880, "stone": 650, "food": 720, "silver": 140 }, "buildSeconds": 155 }
+    ]
+  },
+  "war_hall": {
+    "id": "war_hall",
+    "displayName": "Salão de Guerra",
+    "category": "alliance",
+    "description": "Desbloqueia ataques conjuntos com aliados.",
+    "unlockAtCastleLevel": 3,
+    "maxLevel": 3,
+    "footprint": [4, 5],
+    "levels": [
+      { "level": 1, "rallyCapacity": 240, "cost": { "food": 360, "wood": 320, "stone": 280, "silver": 80 }, "buildSeconds": 60 },
+      { "level": 2, "rallyCapacity": 420, "cost": { "food": 780, "wood": 720, "stone": 620, "iron": 180, "silver": 150 }, "buildSeconds": 135 },
+      { "level": 3, "rallyCapacity": 700, "cost": { "food": 1450, "wood": 1320, "stone": 1180, "iron": 420, "silver": 280 }, "buildSeconds": 280 }
+    ]
+  },
+  "trading_post": {
+    "id": "trading_post",
+    "displayName": "Posto de Comércio",
+    "category": "alliance",
+    "description": "Permite trocas de recursos entre aliados.",
+    "unlockAtCastleLevel": 2,
+    "maxLevel": 3,
+    "footprint": [4, 4],
+    "levels": [
+      { "level": 1, "tradeTax": 0.18, "cost": { "wood": 140, "stone": 90, "silver": 25 }, "buildSeconds": 22 },
+      { "level": 2, "tradeTax": 0.12, "cost": { "wood": 360, "stone": 250, "food": 240, "silver": 60 }, "buildSeconds": 70 },
+      { "level": 3, "tradeTax": 0.08, "cost": { "wood": 720, "stone": 580, "food": 600, "silver": 130 }, "buildSeconds": 150 }
+    ]
+  },
+  "wall": {
+    "id": "wall",
+    "displayName": "Muralha",
+    "category": "defense",
+    "description": "Aumenta resistência da cidade.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 5,
+    "footprint": [8, 2],
+    "levels": [
+      { "level": 1, "cityDefense": 80, "cost": { "stone": 90, "wood": 50 }, "buildSeconds": 12 },
+      { "level": 2, "cityDefense": 190, "cost": { "stone": 220, "wood": 130 }, "buildSeconds": 36 },
+      { "level": 3, "cityDefense": 390, "cost": { "stone": 520, "wood": 320, "iron": 120 }, "buildSeconds": 90 },
+      { "level": 4, "cityDefense": 720, "cost": { "stone": 1080, "wood": 680, "iron": 280 }, "buildSeconds": 180 },
+      { "level": 5, "cityDefense": 1200, "cost": { "stone": 1950, "wood": 1250, "iron": 560, "silver": 120 }, "buildSeconds": 360 }
+    ]
+  },
+  "watchtower": {
+    "id": "watchtower",
+    "displayName": "Torre de Vigia",
+    "category": "defense",
+    "description": "Detecta ataques e melhora espionagem.",
+    "unlockAtCastleLevel": 2,
+    "maxLevel": 4,
+    "footprint": [3, 3],
+    "levels": [
+      { "level": 1, "scoutIntel": 1, "cost": { "wood": 120, "stone": 100 }, "buildSeconds": 18 },
+      { "level": 2, "scoutIntel": 2, "cost": { "wood": 300, "stone": 260, "food": 180 }, "buildSeconds": 60 },
+      { "level": 3, "scoutIntel": 3, "cost": { "wood": 680, "stone": 560, "food": 420, "iron": 140 }, "buildSeconds": 135 },
+      { "level": 4, "scoutIntel": 4, "cost": { "wood": 1280, "stone": 1120, "food": 820, "iron": 340 }, "buildSeconds": 270 }
+    ]
+  },
+  "farm": {
+    "id": "farm",
+    "displayName": "Fazenda",
+    "category": "production",
+    "description": "Produz comida passivamente.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 5,
+    "footprint": [4, 4],
+    "production": { "resource": "food" },
+    "levels": [
+      { "level": 1, "productionPerMinute": 42, "capacity": 900, "cost": { "wood": 40 }, "buildSeconds": 8 },
+      { "level": 2, "productionPerMinute": 76, "capacity": 1800, "cost": { "wood": 120, "stone": 60 }, "buildSeconds": 28 },
+      { "level": 3, "productionPerMinute": 130, "capacity": 3400, "cost": { "wood": 300, "stone": 150, "iron": 60 }, "buildSeconds": 70 },
+      { "level": 4, "productionPerMinute": 210, "capacity": 6200, "cost": { "wood": 640, "stone": 360, "iron": 140 }, "buildSeconds": 150 },
+      { "level": 5, "productionPerMinute": 330, "capacity": 11000, "cost": { "wood": 1180, "stone": 720, "iron": 300, "silver": 70 }, "buildSeconds": 300 }
+    ]
+  },
+  "lumber_mill": {
+    "id": "lumber_mill",
+    "displayName": "Serraria",
+    "category": "production",
+    "description": "Produz madeira passivamente.",
+    "unlockAtCastleLevel": 1,
+    "maxLevel": 5,
+    "footprint": [4, 4],
+    "production": { "resource": "wood" },
+    "levels": [
+      { "level": 1, "productionPerMinute": 38, "capacity": 850, "cost": { "food": 40 }, "buildSeconds": 8 },
+      { "level": 2, "productionPerMinute": 70, "capacity": 1700, "cost": { "food": 120, "stone": 70 }, "buildSeconds": 28 },
+      { "level": 3, "productionPerMinute": 118, "capacity": 3200, "cost": { "food": 300, "stone": 170, "iron": 60 }, "buildSeconds": 70 },
+      { "level": 4, "productionPerMinute": 198, "capacity": 6000, "cost": { "food": 640, "stone": 380, "iron": 140 }, "buildSeconds": 150 },
+      { "level": 5, "productionPerMinute": 310, "capacity": 10500, "cost": { "food": 1180, "stone": 760, "iron": 300, "silver": 70 }, "buildSeconds": 300 }
+    ]
+  },
+  "quarry": {
+    "id": "quarry",
+    "displayName": "Pedreira",
+    "category": "production",
+    "description": "Produz pedra passivamente.",
+    "unlockAtCastleLevel": 2,
+    "maxLevel": 5,
+    "footprint": [4, 4],
+    "production": { "resource": "stone" },
+    "levels": [
+      { "level": 1, "productionPerMinute": 26, "capacity": 650, "cost": { "wood": 80, "food": 70 }, "buildSeconds": 12 },
+      { "level": 2, "productionPerMinute": 52, "capacity": 1300, "cost": { "wood": 180, "food": 160 }, "buildSeconds": 40 },
+      { "level": 3, "productionPerMinute": 94, "capacity": 2600, "cost": { "wood": 420, "food": 380, "iron": 80 }, "buildSeconds": 90 },
+      { "level": 4, "productionPerMinute": 158, "capacity": 5000, "cost": { "wood": 860, "food": 780, "iron": 180 }, "buildSeconds": 180 },
+      { "level": 5, "productionPerMinute": 250, "capacity": 9000, "cost": { "wood": 1550, "food": 1450, "iron": 380, "silver": 90 }, "buildSeconds": 340 }
+    ]
+  },
+  "iron_mine": {
+    "id": "iron_mine",
+    "displayName": "Mina de Ferro",
+    "category": "production",
+    "description": "Produz ferro passivamente.",
+    "unlockAtCastleLevel": 3,
+    "maxLevel": 5,
+    "footprint": [4, 4],
+    "production": { "resource": "iron" },
+    "levels": [
+      { "level": 1, "productionPerMinute": 18, "capacity": 450, "cost": { "wood": 120, "stone": 100, "food": 90 }, "buildSeconds": 18 },
+      { "level": 2, "productionPerMinute": 38, "capacity": 900, "cost": { "wood": 280, "stone": 240, "food": 220 }, "buildSeconds": 55 },
+      { "level": 3, "productionPerMinute": 70, "capacity": 1800, "cost": { "wood": 620, "stone": 520, "food": 520 }, "buildSeconds": 120 },
+      { "level": 4, "productionPerMinute": 120, "capacity": 3600, "cost": { "wood": 1250, "stone": 1100, "food": 1040, "silver": 80 }, "buildSeconds": 240 },
+      { "level": 5, "productionPerMinute": 190, "capacity": 7000, "cost": { "wood": 2300, "stone": 2100, "food": 1950, "silver": 180 }, "buildSeconds": 460 }
+    ]
+  }
+}

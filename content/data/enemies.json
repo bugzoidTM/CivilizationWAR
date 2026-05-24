@@ -1,0 +1,57 @@
+{
+  "bandit_scouts": {
+    "id": "bandit_scouts",
+    "displayName": "Batedores Bandidos",
+    "level": 1,
+    "kind": "npc_camp",
+    "recommendedPower": 160,
+    "army": { "swordsman": 14, "archer": 8 },
+    "rewards": { "food": 140, "wood": 120, "silver": 18 },
+    "respawnSeconds": 120,
+    "missionTags": ["first_pve"]
+  },
+  "rebel_raiders": {
+    "id": "rebel_raiders",
+    "displayName": "Saqueadores Rebeldes",
+    "level": 2,
+    "kind": "npc_camp",
+    "recommendedPower": 340,
+    "army": { "spearman": 24, "archer": 14 },
+    "rewards": { "food": 240, "wood": 210, "stone": 100, "silver": 30 },
+    "respawnSeconds": 180,
+    "missionTags": ["daily_pve"]
+  },
+  "iron_deserters": {
+    "id": "iron_deserters",
+    "displayName": "Desertores da Mina",
+    "level": 3,
+    "kind": "npc_camp",
+    "recommendedPower": 620,
+    "army": { "swordsman": 32, "spearman": 18, "crossbowman": 10 },
+    "rewards": { "food": 360, "wood": 280, "iron": 130, "silver": 42 },
+    "respawnSeconds": 240,
+    "missionTags": ["iron_route"]
+  },
+  "ancient_guard": {
+    "id": "ancient_guard",
+    "displayName": "Guarda Antiga",
+    "level": 4,
+    "kind": "wonder_guard",
+    "recommendedPower": 980,
+    "army": { "swordsman": 44, "spearman": 32, "catapult": 4 },
+    "rewards": { "stone": 420, "iron": 220, "silver": 80, "gold": 3 },
+    "respawnSeconds": 420,
+    "missionTags": ["wonder_pve"]
+  },
+  "rival_lord_vanguard": {
+    "id": "rival_lord_vanguard",
+    "displayName": "Vanguarda do Lorde Rival",
+    "level": 5,
+    "kind": "pvp_training",
+    "recommendedPower": 1450,
+    "army": { "swordsman": 56, "cavalry": 22, "crossbowman": 18, "battering_ram": 3 },
+    "rewards": { "food": 620, "wood": 560, "stone": 260, "iron": 180, "silver": 120, "gold": 5 },
+    "respawnSeconds": 600,
+    "missionTags": ["pvp_intro"]
+  }
+}

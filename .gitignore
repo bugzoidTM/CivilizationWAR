@@ -1,0 +1,12 @@
+.tools/
+build/
+
+*.log
+*.tmp
+*.bak
+
+__pycache__/
+*.py[cod]
+
+.DS_Store
+Thumbs.db

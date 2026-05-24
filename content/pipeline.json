@@ -1,0 +1,14 @@
+{
+  "gameId": "civilizationwar",
+  "displayName": "CivilizationWAR",
+  "target": "Roblox",
+  "contentVersion": "0.1.0",
+  "generatedLuauPath": "src/ReplicatedStorage/CivilizationWar/Shared/GeneratedContent.lua",
+  "entryMap": "starter_valley",
+  "entryMission": "m001_raise_the_keep",
+  "notes": [
+    "Edit JSON files under content/ and run tools/build-content.ps1.",
+    "GeneratedContent.lua is consumed by Roblox runtime scripts.",
+    "Map blueprints use studs for positions and sizes."
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "rome": {
+    "id": "rome",
+    "displayName": "Roma",
+    "culture": "Ocidente",
+    "signatureUnit": "battering_ram",
+    "treasure": "Estandarte da Legião",
+    "bonuses": [
+      { "stat": "buildingSpeed", "amount": 0.05 },
+      { "stat": "siegeAttack", "amount": 0.08 },
+      { "stat": "warehouseProtection", "amount": 0.06 }
+    ],
+    "startingResources": { "stone": 150, "iron": 80 }
+  },
+  "england": {
+    "id": "england",
+    "displayName": "Inglaterra",
+    "culture": "Ocidente",
+    "signatureUnit": "longbow_archer",
+    "treasure": "Coroa de Carvalho",
+    "bonuses": [
+      { "stat": "rangedAttack", "amount": 0.08 },
+      { "stat": "watchtowerRange", "amount": 0.1 },
+      { "stat": "marketTradeReturn", "amount": 0.05 }
+    ],
+    "startingResources": { "wood": 220, "silver": 40 }
+  },
+  "egypt": {
+    "id": "egypt",
+    "displayName": "Egito",
+    "culture": "Oriente",
+    "signatureUnit": "horse_archer",
+    "treasure": "Escaravelho Solar",
+    "bonuses": [
+      { "stat": "foodProduction", "amount": 0.08 },
+      { "stat": "mountedSpeed", "amount": 0.07 },
+      { "stat": "relicFindChance", "amount": 0.05 }
+    ],
+    "startingResources": { "food": 240, "gold": 5 }
+  },
+  "china": {
+    "id": "china",
+    "displayName": "China",
+    "culture": "Oriente",
+    "signatureUnit": "crossbowman",
+    "treasure": "Selo Imperial",
+    "bonuses": [
+      { "stat": "researchSpeed", "amount": 0.06 },
+      { "stat": "rangedDefense", "amount": 0.06 },
+      { "stat": "builderQueueEfficiency", "amount": 0.04 }
+    ],
+    "startingResources": { "wood": 160, "food": 180 }
+  },
+  "japan": {
+    "id": "japan",
+    "displayName": "Japão",
+    "culture": "Oriente",
+    "signatureUnit": "swordsman",
+    "treasure": "Lâmina do Daimyo",
+    "bonuses": [
+      { "stat": "infantryAttack", "amount": 0.07 },
+      { "stat": "trainingSpeed", "amount": 0.05 },
+      { "stat": "marchReturnSpeed", "amount": 0.05 }
+    ],
+    "startingResources": { "iron": 120, "food": 120 }
+  },
+  "korea": {
+    "id": "korea",
+    "displayName": "Coreia",
+    "culture": "Oriente",
+    "signatureUnit": "catapult",
+    "treasure": "Mapa das Estrelas",
+    "bonuses": [
+      { "stat": "siegeDefense", "amount": 0.08 },
+      { "stat": "researchSpeed", "amount": 0.04 },
+      { "stat": "trapDamage", "amount": 0.06 }
+    ],
+    "startingResources": { "stone": 200, "silver": 30 }
+  },
+  "india": {
+    "id": "india",
+    "displayName": "Índia",
+    "culture": "Oriente",
+    "signatureUnit": "cavalry",
+    "treasure": "Joia dos Monções",
+    "bonuses": [
+      { "stat": "mountedAttack", "amount": 0.07 },
+      { "stat": "hospitalCapacity", "amount": 0.08 },
+      { "stat": "resourceGatherSpeed", "amount": 0.05 }
+    ],
+    "startingResources": { "food": 180, "iron": 90 }
+  },
+  "islam": {
+    "id": "islam",
+    "displayName": "Sultanato",
+    "culture": "Ocidente",
+    "signatureUnit": "spearman",
+    "treasure": "Astrolábio Real",
+    "bonuses": [
+      { "stat": "infantryDefense", "amount": 0.08 },
+      { "stat": "tradeCaravanCapacity", "amount": 0.08 },
+      { "stat": "silverProduction", "amount": 0.05 }
+    ],
+    "startingResources": { "silver": 60, "wood": 140 }
+  }
+}

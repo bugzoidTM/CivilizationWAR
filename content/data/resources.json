@@ -1,0 +1,44 @@
+{
+  "food": {
+    "id": "food",
+    "displayName": "Comida",
+    "category": "basic",
+    "color": [96, 181, 91],
+    "protectedByWarehouse": true
+  },
+  "wood": {
+    "id": "wood",
+    "displayName": "Madeira",
+    "category": "basic",
+    "color": [139, 91, 52],
+    "protectedByWarehouse": true
+  },
+  "stone": {
+    "id": "stone",
+    "displayName": "Pedra",
+    "category": "basic",
+    "color": [140, 151, 160],
+    "protectedByWarehouse": true
+  },
+  "iron": {
+    "id": "iron",
+    "displayName": "Ferro",
+    "category": "advanced",
+    "color": [99, 111, 122],
+    "protectedByWarehouse": true
+  },
+  "silver": {
+    "id": "silver",
+    "displayName": "Prata",
+    "category": "special",
+    "color": [192, 198, 208],
+    "protectedByWarehouse": false
+  },
+  "gold": {
+    "id": "gold",
+    "displayName": "Ouro",
+    "category": "premium",
+    "color": [242, 188, 73],
+    "protectedByWarehouse": false
+  }
+}

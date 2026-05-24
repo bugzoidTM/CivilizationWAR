@@ -1,0 +1,185 @@
+{
+  "castle": {
+    "id": "castle",
+    "displayName": "Castelo",
+    "pieces": [
+      { "name": "Keep", "shape": "Block", "size": [14, 18, 14], "offset": [0, 9, 0], "color": [119, 123, 132], "material": "Slate" },
+      { "name": "TowerNW", "shape": "Block", "size": [5, 22, 5], "offset": [-8, 11, -8], "color": [104, 108, 117], "material": "Slate" },
+      { "name": "TowerSE", "shape": "Block", "size": [5, 22, 5], "offset": [8, 11, 8], "color": [104, 108, 117], "material": "Slate" },
+      { "name": "GateArch", "shape": "Block", "size": [9, 8, 2], "offset": [0, 4, -8], "color": [88, 92, 100], "material": "Slate" },
+      { "name": "Banner", "shape": "Block", "size": [1, 6, 8], "offset": [0, 22, -7.5], "color": [184, 54, 54], "material": "Fabric" }
+    ]
+  },
+  "building_farm": {
+    "id": "building_farm",
+    "displayName": "Fazenda",
+    "pieces": [
+      { "name": "FieldA", "shape": "Block", "size": [16, 0.8, 9], "offset": [0, 0.4, 0], "color": [94, 151, 72], "material": "Grass" },
+      { "name": "FieldB", "shape": "Block", "size": [16, 0.9, 4], "offset": [0, 0.6, 5.5], "color": [166, 143, 80], "material": "Ground" },
+      { "name": "Barn", "shape": "Block", "size": [7, 5, 6], "offset": [-6, 3, -6], "color": [151, 74, 54], "material": "Wood" },
+      { "name": "Roof", "shape": "Wedge", "size": [8, 4, 7], "offset": [-6, 7, -6], "color": [96, 66, 46], "material": "Wood" }
+    ]
+  },
+  "building_lumber_mill": {
+    "id": "building_lumber_mill",
+    "displayName": "Serraria",
+    "pieces": [
+      { "name": "Yard", "shape": "Block", "size": [16, 0.8, 12], "offset": [0, 0.4, 0], "color": [73, 119, 67], "material": "Grass" },
+      { "name": "Mill", "shape": "Block", "size": [8, 5, 7], "offset": [-4, 3, -3], "color": [118, 78, 43], "material": "Wood" },
+      { "name": "LogA", "shape": "Cylinder", "size": [2, 10, 2], "offset": [5, 1.6, 3], "rotation": [0, 0, 90], "color": [113, 74, 42], "material": "Wood" },
+      { "name": "LogB", "shape": "Cylinder", "size": [2, 8, 2], "offset": [5, 3.4, 0], "rotation": [0, 0, 90], "color": [126, 82, 47], "material": "Wood" }
+    ]
+  },
+  "building_barracks": {
+    "id": "building_barracks",
+    "displayName": "Quartéis",
+    "pieces": [
+      { "name": "TrainingYard", "shape": "Block", "size": [18, 0.8, 14], "offset": [0, 0.4, 0], "color": [117, 101, 75], "material": "Ground" },
+      { "name": "Hall", "shape": "Block", "size": [12, 6, 7], "offset": [-2, 3.4, -3], "color": [134, 91, 61], "material": "Wood" },
+      { "name": "Roof", "shape": "Wedge", "size": [13, 4, 8], "offset": [-2, 8, -3], "color": [89, 63, 48], "material": "Wood" },
+      { "name": "WeaponRack", "shape": "Block", "size": [1, 5, 8], "offset": [7, 2.9, 4], "color": [72, 78, 83], "material": "Metal" }
+    ]
+  },
+  "building_academy": {
+    "id": "building_academy",
+    "displayName": "Academia",
+    "pieces": [
+      { "name": "Foundation", "shape": "Block", "size": [14, 1, 12], "offset": [0, 0.5, 0], "color": [148, 141, 126], "material": "Slate" },
+      { "name": "MainHall", "shape": "Block", "size": [10, 8, 9], "offset": [0, 4.8, 0], "color": [177, 164, 126], "material": "Sandstone" },
+      { "name": "Dome", "shape": "Ball", "size": [9, 5, 9], "offset": [0, 10, 0], "color": [83, 123, 145], "material": "Metal" },
+      { "name": "ScrollMarker", "shape": "Block", "size": [6, 3, 0.6], "offset": [0, 5, -4.8], "color": [236, 224, 178], "material": "Fabric" }
+    ]
+  },
+  "building_embassy": {
+    "id": "building_embassy",
+    "displayName": "Embaixada",
+    "pieces": [
+      { "name": "Base", "shape": "Block", "size": [13, 1, 11], "offset": [0, 0.5, 0], "color": [145, 134, 118], "material": "Slate" },
+      { "name": "Office", "shape": "Block", "size": [9, 6, 7], "offset": [0, 3.5, 0], "color": [188, 157, 103], "material": "Sandstone" },
+      { "name": "BlueBanner", "shape": "Block", "size": [0.7, 5, 4], "offset": [-5.2, 5, -2], "color": [65, 103, 170], "material": "Fabric" },
+      { "name": "GoldBanner", "shape": "Block", "size": [0.7, 5, 4], "offset": [5.2, 5, -2], "color": [218, 166, 70], "material": "Fabric" }
+    ]
+  },
+  "resource_node_food": {
+    "id": "resource_node_food",
+    "displayName": "Campo de Comida",
+    "pieces": [
+      { "name": "Field", "shape": "Block", "size": [13, 1, 13], "offset": [0, 0.5, 0], "color": [89, 156, 84], "material": "Grass" },
+      { "name": "Marker", "shape": "Cylinder", "size": [2, 3, 2], "offset": [0, 2.2, 0], "color": [242, 188, 73], "material": "Wood" }
+    ]
+  },
+  "resource_node_wood": {
+    "id": "resource_node_wood",
+    "displayName": "Bosque de Madeira",
+    "pieces": [
+      { "name": "Ground", "shape": "Block", "size": [12, 1, 12], "offset": [0, 0.5, 0], "color": [67, 123, 73], "material": "Grass" },
+      { "name": "TrunkA", "shape": "Cylinder", "size": [2, 7, 2], "offset": [-2, 4, 1], "color": [113, 74, 42], "material": "Wood" },
+      { "name": "TrunkB", "shape": "Cylinder", "size": [2, 6, 2], "offset": [3, 3.5, -2], "color": [113, 74, 42], "material": "Wood" }
+    ]
+  },
+  "resource_node_stone": {
+    "id": "resource_node_stone",
+    "displayName": "Pedreira",
+    "pieces": [
+      { "name": "Pit", "shape": "Block", "size": [14, 1, 12], "offset": [0, 0.5, 0], "color": [105, 112, 116], "material": "Rock" },
+      { "name": "StoneA", "shape": "Block", "size": [5, 4, 5], "offset": [-3, 2.5, -1], "color": [134, 143, 149], "material": "Rock" },
+      { "name": "StoneB", "shape": "Wedge", "size": [5, 5, 6], "offset": [4, 3, 2], "color": [123, 132, 139], "material": "Rock" }
+    ]
+  },
+  "resource_node_iron": {
+    "id": "resource_node_iron",
+    "displayName": "Mina de Ferro",
+    "pieces": [
+      { "name": "MineFloor", "shape": "Block", "size": [14, 1, 12], "offset": [0, 0.5, 0], "color": [87, 94, 99], "material": "Rock" },
+      { "name": "Shaft", "shape": "Block", "size": [8, 6, 5], "offset": [0, 3.5, -2], "color": [76, 80, 83], "material": "Rock" },
+      { "name": "OreVein", "shape": "Block", "size": [7, 1, 1], "offset": [0, 5.8, -4.8], "color": [128, 136, 144], "material": "Metal" },
+      { "name": "SupportBeam", "shape": "Block", "size": [10, 1, 1], "offset": [0, 6.5, -2], "color": [112, 75, 43], "material": "Wood" }
+    ]
+  },
+  "resource_node_silver": {
+    "id": "resource_node_silver",
+    "displayName": "Veio de Prata",
+    "pieces": [
+      { "name": "SandPad", "shape": "Block", "size": [13, 1, 13], "offset": [0, 0.5, 0], "color": [190, 169, 120], "material": "Sand" },
+      { "name": "RelicStone", "shape": "Block", "size": [5, 7, 3], "offset": [0, 4, 0], "color": [174, 178, 184], "material": "Slate" },
+      { "name": "SilverLine", "shape": "Block", "size": [5.2, 0.8, 0.5], "offset": [0, 5.8, -1.55], "color": [220, 225, 230], "material": "Metal" }
+    ]
+  },
+  "npc_camp": {
+    "id": "npc_camp",
+    "displayName": "Acampamento NPC",
+    "pieces": [
+      { "name": "CampGround", "shape": "Block", "size": [14, 1, 14], "offset": [0, 0.5, 0], "color": [116, 100, 76], "material": "Ground" },
+      { "name": "Tent", "shape": "Wedge", "size": [8, 5, 9], "offset": [0, 3, 0], "color": [155, 73, 55], "material": "Fabric" },
+      { "name": "BannerPole", "shape": "Cylinder", "size": [1, 8, 1], "offset": [5, 4, -5], "color": [92, 61, 35], "material": "Wood" }
+    ]
+  },
+  "alliance_banner": {
+    "id": "alliance_banner",
+    "displayName": "Bandeira de Aliança",
+    "pieces": [
+      { "name": "Pole", "shape": "Cylinder", "size": [1, 14, 1], "offset": [0, 7, 0], "color": [88, 61, 38], "material": "Wood" },
+      { "name": "Flag", "shape": "Block", "size": [0.8, 7, 8], "offset": [0.7, 10, -3.5], "color": [58, 95, 172], "material": "Fabric" },
+      { "name": "Base", "shape": "Block", "size": [5, 1, 5], "offset": [0, 0.5, 0], "color": [111, 119, 124], "material": "Slate" }
+    ]
+  },
+  "watchtower_prop": {
+    "id": "watchtower_prop",
+    "displayName": "Torre de Vigia",
+    "pieces": [
+      { "name": "LegA", "shape": "Block", "size": [1.2, 12, 1.2], "offset": [-3, 6, -3], "color": [107, 73, 43], "material": "Wood" },
+      { "name": "LegB", "shape": "Block", "size": [1.2, 12, 1.2], "offset": [3, 6, -3], "color": [107, 73, 43], "material": "Wood" },
+      { "name": "LegC", "shape": "Block", "size": [1.2, 12, 1.2], "offset": [-3, 6, 3], "color": [107, 73, 43], "material": "Wood" },
+      { "name": "LegD", "shape": "Block", "size": [1.2, 12, 1.2], "offset": [3, 6, 3], "color": [107, 73, 43], "material": "Wood" },
+      { "name": "Platform", "shape": "Block", "size": [9, 1, 9], "offset": [0, 12.5, 0], "color": [126, 86, 51], "material": "Wood" },
+      { "name": "Roof", "shape": "Wedge", "size": [10, 5, 10], "offset": [0, 16, 0], "color": [96, 65, 45], "material": "Wood" }
+    ]
+  },
+  "village_house": {
+    "id": "village_house",
+    "displayName": "Casa de Aldeão",
+    "pieces": [
+      { "name": "House", "shape": "Block", "size": [9, 5, 7], "offset": [0, 2.8, 0], "color": [164, 124, 82], "material": "Wood" },
+      { "name": "Roof", "shape": "Wedge", "size": [10, 4, 8], "offset": [0, 7, 0], "color": [105, 73, 53], "material": "Wood" },
+      { "name": "Door", "shape": "Block", "size": [2.4, 3.6, 0.5], "offset": [0, 2, -3.8], "color": [83, 52, 33], "material": "Wood" }
+    ]
+  },
+  "palisade_wall": {
+    "id": "palisade_wall",
+    "displayName": "Paliçada",
+    "pieces": [
+      { "name": "PostA", "shape": "Block", "size": [2, 8, 2], "offset": [-5, 4, 0], "color": [105, 70, 42], "material": "Wood" },
+      { "name": "PostB", "shape": "Block", "size": [2, 8, 2], "offset": [0, 4, 0], "color": [105, 70, 42], "material": "Wood" },
+      { "name": "PostC", "shape": "Block", "size": [2, 8, 2], "offset": [5, 4, 0], "color": [105, 70, 42], "material": "Wood" },
+      { "name": "Rail", "shape": "Block", "size": [12, 1.5, 1], "offset": [0, 5.2, -0.6], "color": [121, 80, 47], "material": "Wood" }
+    ]
+  },
+  "market_stall": {
+    "id": "market_stall",
+    "displayName": "Banca do Mercado",
+    "pieces": [
+      { "name": "Counter", "shape": "Block", "size": [8, 2, 4], "offset": [0, 1.4, 0], "color": [123, 83, 48], "material": "Wood" },
+      { "name": "Canopy", "shape": "Block", "size": [9, 0.7, 5], "offset": [0, 5, 0], "color": [202, 155, 74], "material": "Fabric" },
+      { "name": "PoleA", "shape": "Block", "size": [0.6, 5, 0.6], "offset": [-4, 2.5, -2], "color": [94, 62, 36], "material": "Wood" },
+      { "name": "PoleB", "shape": "Block", "size": [0.6, 5, 0.6], "offset": [4, 2.5, -2], "color": [94, 62, 36], "material": "Wood" }
+    ]
+  },
+  "relic_marker": {
+    "id": "relic_marker",
+    "displayName": "Marco de Relíquia",
+    "pieces": [
+      { "name": "Plinth", "shape": "Block", "size": [8, 2, 8], "offset": [0, 1, 0], "color": [176, 155, 105], "material": "Sandstone" },
+      { "name": "Tablet", "shape": "Block", "size": [5, 8, 1], "offset": [0, 5, 0], "color": [197, 178, 119], "material": "Sandstone" },
+      { "name": "Rune", "shape": "Block", "size": [3.8, 0.5, 0.5], "offset": [0, 6, -0.8], "color": [226, 195, 89], "material": "Metal" }
+    ]
+  },
+  "wonder_obelisk": {
+    "id": "wonder_obelisk",
+    "displayName": "Obelisco dos Sete Mistérios",
+    "pieces": [
+      { "name": "Base", "shape": "Block", "size": [20, 3, 20], "offset": [0, 1.5, 0], "color": [172, 154, 105], "material": "Sandstone" },
+      { "name": "Shaft", "shape": "Block", "size": [7, 34, 7], "offset": [0, 19, 0], "color": [197, 178, 119], "material": "Sandstone" },
+      { "name": "Cap", "shape": "Wedge", "size": [8, 7, 8], "offset": [0, 39, 0], "color": [226, 195, 89], "material": "Sandstone" }
+    ]
+  }
+}

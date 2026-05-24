@@ -1,0 +1,74 @@
+{
+  "economy_gathering_1": {
+    "id": "economy_gathering_1",
+    "displayName": "Rotas de Coleta I",
+    "tree": "Economia",
+    "academyLevel": 1,
+    "cost": { "food": 120, "wood": 120, "silver": 10 },
+    "researchSeconds": 20,
+    "effects": [
+      { "stat": "resourceGatherSpeed", "amount": 0.05 }
+    ],
+    "prerequisites": []
+  },
+  "economy_storage_1": {
+    "id": "economy_storage_1",
+    "displayName": "Armazéns Selados I",
+    "tree": "Economia",
+    "academyLevel": 1,
+    "cost": { "wood": 140, "stone": 100, "silver": 12 },
+    "researchSeconds": 28,
+    "effects": [
+      { "stat": "warehouseProtection", "amount": 0.05 }
+    ],
+    "prerequisites": ["economy_gathering_1"]
+  },
+  "battle_infantry_1": {
+    "id": "battle_infantry_1",
+    "displayName": "Formação de Escudos I",
+    "tree": "Batalha",
+    "academyLevel": 1,
+    "cost": { "food": 160, "iron": 50, "silver": 14 },
+    "researchSeconds": 30,
+    "effects": [
+      { "stat": "infantryDefense", "amount": 0.05 }
+    ],
+    "prerequisites": []
+  },
+  "battle_archery_1": {
+    "id": "battle_archery_1",
+    "displayName": "Arcos Compostos I",
+    "tree": "Batalha",
+    "academyLevel": 2,
+    "cost": { "food": 220, "wood": 180, "iron": 70, "silver": 20 },
+    "researchSeconds": 48,
+    "effects": [
+      { "stat": "rangedAttack", "amount": 0.05 }
+    ],
+    "prerequisites": ["battle_infantry_1"]
+  },
+  "technology_builder_1": {
+    "id": "technology_builder_1",
+    "displayName": "Guindastes de Madeira I",
+    "tree": "Tecnologia",
+    "academyLevel": 2,
+    "cost": { "wood": 260, "stone": 160, "silver": 24 },
+    "researchSeconds": 55,
+    "effects": [
+      { "stat": "constructionSpeed", "amount": 0.05 }
+    ],
+    "prerequisites": ["economy_storage_1"]
+  },
+  "defense_watch_1": {
+    "id": "defense_watch_1",
+    "displayName": "Sinais de Vigia I",
+    "tree": "Defesa do Castelo",
+    "academyLevel": 2,
+    "cost": { "wood": 200, "stone": 220, "silver": 18 },
+    "researchSeconds": 42,
+    "effects": [
+      { "stat": "scoutIntel", "amount": 1 }
+    ],
+    "prerequisites": []
+  }
+}

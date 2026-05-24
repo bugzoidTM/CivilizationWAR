@@ -1,0 +1,74 @@
+{
+  "augustus": {
+    "id": "augustus",
+    "displayName": "Augusto",
+    "type": "Ruler",
+    "rarity": "epic",
+    "fragmentsRequired": 20,
+    "assignment": "Council",
+    "bonuses": [
+      { "stat": "constructionSpeed", "amount": 0.05 },
+      { "stat": "cityDefense", "amount": 0.04 }
+    ]
+  },
+  "cleopatra": {
+    "id": "cleopatra",
+    "displayName": "Cleópatra",
+    "type": "Adviser",
+    "rarity": "epic",
+    "fragmentsRequired": 20,
+    "assignment": "Court",
+    "bonuses": [
+      { "stat": "foodProduction", "amount": 0.06 },
+      { "stat": "tradeReturn", "amount": 0.04 }
+    ]
+  },
+  "hypatia": {
+    "id": "hypatia",
+    "displayName": "Hipátia",
+    "type": "Scientist",
+    "rarity": "rare",
+    "fragmentsRequired": 20,
+    "assignment": "Academy",
+    "bonuses": [
+      { "stat": "researchSpeed", "amount": 0.06 },
+      { "stat": "researchCost", "amount": -0.03 }
+    ]
+  },
+  "zheng_he": {
+    "id": "zheng_he",
+    "displayName": "Zheng He",
+    "type": "Commander",
+    "rarity": "epic",
+    "fragmentsRequired": 20,
+    "assignment": "Harbor",
+    "bonuses": [
+      { "stat": "marchSpeed", "amount": 0.06 },
+      { "stat": "resourceGatherSpeed", "amount": 0.05 }
+    ]
+  },
+  "leonardo": {
+    "id": "leonardo",
+    "displayName": "Leonardo",
+    "type": "Artist",
+    "rarity": "legendary",
+    "fragmentsRequired": 30,
+    "assignment": "Workshop",
+    "bonuses": [
+      { "stat": "siegeAttack", "amount": 0.08 },
+      { "stat": "constructionCost", "amount": -0.04 }
+    ]
+  },
+  "avicenna": {
+    "id": "avicenna",
+    "displayName": "Avicena",
+    "type": "Physician",
+    "rarity": "rare",
+    "fragmentsRequired": 20,
+    "assignment": "Hospital",
+    "bonuses": [
+      { "stat": "healingSpeed", "amount": 0.08 },
+      { "stat": "woundedConversion", "amount": 0.04 }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "m001_raise_the_keep": {
+    "id": "m001_raise_the_keep",
+    "chapter": 1,
+    "title": "Reerguer o Castelo",
+    "giver": "npc_chancellor",
+    "dialogueStart": "chancellor_intro",
+    "objectives": [
+      { "type": "building_level", "buildingId": "castle", "level": 1 }
+    ],
+    "rewards": { "food": 150, "wood": 150, "stone": 90 },
+    "nextMission": "m002_feed_the_city"
+  },
+  "m002_feed_the_city": {
+    "id": "m002_feed_the_city",
+    "chapter": 1,
+    "title": "A Primeira Colheita",
+    "giver": "npc_steward",
+    "dialogueStart": "steward_farm_intro",
+    "objectives": [
+      { "type": "building_level", "buildingId": "farm", "level": 1 },
+      { "type": "collect_resource", "resource": "food", "amount": 100 }
+    ],
+    "rewards": { "food": 180, "wood": 100, "silver": 12 },
+    "nextMission": "m003_train_the_line"
+  },
+  "m003_train_the_line": {
+    "id": "m003_train_the_line",
+    "chapter": 1,
+    "title": "Linha de Frente",
+    "giver": "npc_captain",
+    "dialogueStart": "captain_training_intro",
+    "objectives": [
+      { "type": "building_level", "buildingId": "barracks", "level": 1 },
+      { "type": "train_troops", "troopId": "swordsman", "amount": 20 }
+    ],
+    "rewards": { "food": 220, "wood": 120, "iron": 40, "silver": 18 },
+    "nextMission": "m004_clear_the_road"
+  },
+  "m004_clear_the_road": {
+    "id": "m004_clear_the_road",
+    "chapter": 1,
+    "title": "Limpar a Estrada Norte",
+    "giver": "npc_captain",
+    "dialogueStart": "captain_bandit_intro",
+    "objectives": [
+      { "type": "defeat_enemy", "enemyId": "bandit_scouts", "amount": 1 }
+    ],
+    "rewards": { "food": 300, "wood": 250, "stone": 140, "silver": 35 },
+    "nextMission": "m005_light_the_academy"
+  },
+  "m005_light_the_academy": {
+    "id": "m005_light_the_academy",
+    "chapter": 1,
+    "title": "Acender a Academia",
+    "giver": "npc_scholar",
+    "dialogueStart": "scholar_academy_intro",
+    "objectives": [
+      { "type": "building_level", "buildingId": "academy", "level": 1 },
+      { "type": "research_complete", "technologyId": "economy_gathering_1", "amount": 1 }
+    ],
+    "rewards": { "food": 260, "wood": 260, "stone": 180, "silver": 45 },
+    "nextMission": "m006_oath_of_alliance"
+  },
+  "m006_oath_of_alliance": {
+    "id": "m006_oath_of_alliance",
+    "chapter": 1,
+    "title": "Juramento de Aliança",
+    "giver": "npc_ambassador",
+    "dialogueStart": "ambassador_alliance_intro",
+    "objectives": [
+      { "type": "building_level", "buildingId": "embassy", "level": 1 },
+      { "type": "explore_region", "regionId": "alliance_plain", "amount": 1 }
+    ],
+    "rewards": { "food": 420, "wood": 420, "stone": 260, "iron": 80, "gold": 5 },
+    "nextMission": null
+  }
+}

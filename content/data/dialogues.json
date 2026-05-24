@@ -1,0 +1,65 @@
+{
+  "chancellor_intro": {
+    "id": "chancellor_intro",
+    "speakerId": "npc_chancellor",
+    "speakerName": "Chanceler Maia",
+    "lines": [
+      "Meu lorde, o castelo voltou a ter bandeira. Ainda é pouco, mas todo império começa com uma pedra bem colocada.",
+      "Proteja o centro da cidade. Tudo que construiremos dependerá dele."
+    ]
+  },
+  "steward_farm_intro": {
+    "id": "steward_farm_intro",
+    "speakerId": "npc_steward",
+    "speakerName": "Intendente Nara",
+    "lines": [
+      "As reservas estão baixas. Uma fazenda ativa evita que a cidade pare antes da primeira campanha.",
+      "Comida mantém trabalhadores, soldados e marchas. Sem isso, a estratégia vira desejo."
+    ]
+  },
+  "captain_training_intro": {
+    "id": "captain_training_intro",
+    "speakerId": "npc_captain",
+    "speakerName": "Capitão Aderbal",
+    "lines": [
+      "Os quartéis precisam respirar. Dê-me vinte espadachins e eu lhe devolvo uma fronteira menos nervosa.",
+      "Infantaria segura a linha enquanto o resto do exército aprende a vencer."
+    ]
+  },
+  "captain_bandit_intro": {
+    "id": "captain_bandit_intro",
+    "speakerId": "npc_captain",
+    "speakerName": "Capitão Aderbal",
+    "lines": [
+      "Batedores bandidos cortaram a estrada norte. Não são fortes, mas sabem farejar cidades jovens.",
+      "Envie uma marcha curta, leia o relatório e volte com os recursos."
+    ]
+  },
+  "scholar_academy_intro": {
+    "id": "scholar_academy_intro",
+    "speakerId": "npc_scholar",
+    "speakerName": "Mestra Lian",
+    "lines": [
+      "Uma cidade que só constrói fica grande. Uma cidade que pesquisa fica perigosa.",
+      "A primeira tecnologia econômica fará cada marcha trazer mais do mundo para dentro das muralhas."
+    ]
+  },
+  "ambassador_alliance_intro": {
+    "id": "ambassador_alliance_intro",
+    "speakerId": "npc_ambassador",
+    "speakerName": "Emissário Samir",
+    "lines": [
+      "Reinos isolados brilham por uma noite. Alianças desenham mapas.",
+      "Erga a embaixada e marque presença na planície onde nossos futuros aliados se reúnem."
+    ]
+  },
+  "merchant_daily_reward": {
+    "id": "merchant_daily_reward",
+    "speakerId": "npc_merchant",
+    "speakerName": "Mercadora Bia",
+    "lines": [
+      "Tenho rotas pequenas, mas fiéis. Volte todos os dias e sempre haverá algo para acelerar sua próxima ordem.",
+      "Prata, madeira, comida... nada heroico, tudo útil."
+    ]
+  }
+}

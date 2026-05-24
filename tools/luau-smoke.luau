@@ -1,0 +1,1 @@
+print("luau smoke ok")

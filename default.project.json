@@ -1,0 +1,21 @@
+{
+  "name": "CivilizationWAR",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "CivilizationWar": {
+        "$path": "src/ReplicatedStorage/CivilizationWar"
+      }
+    },
+    "ServerScriptService": {
+      "CivilizationWar": {
+        "$path": "src/ServerScriptService/CivilizationWar"
+      }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/StarterPlayer/StarterPlayerScripts"
+      }
+    }
+  }
+}

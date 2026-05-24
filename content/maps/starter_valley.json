@@ -1,0 +1,78 @@
+{
+  "id": "starter_valley",
+  "displayName": "Vale das Primeiras Bandeiras",
+  "version": 3,
+  "size": [620, 620],
+  "spawn": [0, 8, 74],
+  "baseplate": {
+    "name": "WorldBase",
+    "position": [0, -1, 0],
+    "size": [640, 2, 640],
+    "color": [92, 136, 82],
+    "material": "Grass",
+    "viewLayer": "Shared"
+  },
+  "terrainTiles": [
+    { "id": "city_plateau", "name": "Plato da Cidade", "position": [0, 0, 0], "size": [150, 2, 150], "color": [112, 145, 93], "material": "Grass", "viewLayer": "Kingdom" },
+    { "id": "command_deck", "name": "Sala de Comando", "position": [0, 0.35, 76], "size": [44, 1, 24], "color": [102, 86, 66], "material": "Wood", "viewLayer": "Kingdom" },
+    { "id": "inner_road_east", "name": "Rua Leste", "position": [35, 0.2, 0], "size": [10, 1, 132], "color": [132, 111, 78], "material": "Ground", "viewLayer": "Kingdom" },
+    { "id": "inner_road_west", "name": "Rua Oeste", "position": [-35, 0.2, 0], "size": [10, 1, 132], "color": [132, 111, 78], "material": "Ground", "viewLayer": "Kingdom" },
+    { "id": "north_road", "name": "Estrada Norte", "position": [0, 0.15, -145], "size": [22, 1, 210], "color": [135, 116, 82], "material": "Ground", "viewLayer": "World" },
+    { "id": "alliance_plain", "name": "Planicie da Alianca", "position": [190, 0.1, -95], "size": [160, 1, 130], "color": [96, 151, 98], "material": "Grass", "viewLayer": "World" },
+    { "id": "iron_ridge", "name": "Cordilheira do Ferro", "position": [-210, 2, -90], "size": [150, 7, 115], "color": [101, 111, 116], "material": "Rock", "viewLayer": "World" },
+    { "id": "relic_sands", "name": "Areias das Reliquias", "position": [170, 0.1, 190], "size": [170, 1, 130], "color": [196, 176, 124], "material": "Sand", "viewLayer": "World" }
+  ],
+  "citySlots": [
+    { "id": "player_city_01", "owner": "player", "position": [0, 1.5, 0], "rotation": [0, 0, 0], "prefab": "castle" },
+    { "id": "farm_slot_01", "buildingId": "farm", "position": [-54, 1, 42], "rotation": [0, 10, 0], "prefab": "building_farm" },
+    { "id": "lumber_slot_01", "buildingId": "lumber_mill", "position": [54, 1, 42], "rotation": [0, -12, 0], "prefab": "building_lumber_mill" },
+    { "id": "barracks_slot_01", "buildingId": "barracks", "position": [-48, 1, -42], "rotation": [0, -8, 0], "prefab": "building_barracks" },
+    { "id": "academy_slot_01", "buildingId": "academy", "position": [46, 1, -38], "rotation": [0, 16, 0], "prefab": "building_academy" },
+    { "id": "embassy_slot_01", "buildingId": "embassy", "position": [64, 1, -4], "rotation": [0, -28, 0], "prefab": "building_embassy" }
+  ],
+  "decorations": [
+    { "id": "house_01", "prefab": "village_house", "position": [-66, 1, 0], "rotation": [0, 90, 0] },
+    { "id": "house_02", "prefab": "village_house", "position": [65, 1, 22], "rotation": [0, -85, 0] },
+    { "id": "market_01", "prefab": "market_stall", "position": [-18, 1, 58], "rotation": [0, 12, 0] },
+    { "id": "watchtower_south", "prefab": "watchtower_prop", "position": [68, 1, 68], "rotation": [0, 45, 0] },
+    { "id": "watchtower_north", "prefab": "watchtower_prop", "position": [-68, 1, -68], "rotation": [0, -135, 0] },
+    { "id": "palisade_north_01", "prefab": "palisade_wall", "position": [-34, 1, -78], "rotation": [0, 90, 0] },
+    { "id": "palisade_north_02", "prefab": "palisade_wall", "position": [34, 1, -78], "rotation": [0, 90, 0] },
+    { "id": "palisade_south_01", "prefab": "palisade_wall", "position": [-34, 1, 78], "rotation": [0, 90, 0] },
+    { "id": "palisade_south_02", "prefab": "palisade_wall", "position": [34, 1, 78], "rotation": [0, 90, 0] },
+    { "id": "alliance_banner_01", "prefab": "alliance_banner", "position": [150, 1, -68], "rotation": [0, 0, 0] },
+    { "id": "alliance_banner_02", "prefab": "alliance_banner", "position": [230, 1, -120], "rotation": [0, 0, 0] },
+    { "id": "relic_marker_01", "prefab": "relic_marker", "position": [138, 1, 168], "rotation": [0, 18, 0] },
+    { "id": "relic_marker_02", "prefab": "relic_marker", "position": [230, 1, 232], "rotation": [0, -22, 0] }
+  ],
+  "resourceNodes": [
+    { "id": "food_node_01", "resource": "food", "level": 1, "amount": 1000, "position": [82, 1, 120], "prefab": "resource_node_food" },
+    { "id": "wood_node_01", "resource": "wood", "level": 1, "amount": 900, "position": [-110, 1, 110], "prefab": "resource_node_wood" },
+    { "id": "stone_node_01", "resource": "stone", "level": 2, "amount": 1200, "position": [-215, 5, -70], "prefab": "resource_node_stone" },
+    { "id": "iron_node_01", "resource": "iron", "level": 2, "amount": 800, "position": [-245, 6, -135], "prefab": "resource_node_iron" },
+    { "id": "silver_node_01", "resource": "silver", "level": 3, "amount": 500, "position": [135, 1, 205], "prefab": "resource_node_silver" }
+  ],
+  "npcCamps": [
+    { "id": "camp_bandit_scouts_01", "enemyId": "bandit_scouts", "position": [0, 1, -215], "prefab": "npc_camp" },
+    { "id": "camp_rebel_raiders_01", "enemyId": "rebel_raiders", "position": [110, 1, -185], "prefab": "npc_camp" },
+    { "id": "camp_iron_deserters_01", "enemyId": "iron_deserters", "position": [-198, 6, -160], "prefab": "npc_camp" },
+    { "id": "camp_rival_vanguard_01", "enemyId": "rival_lord_vanguard", "position": [235, 1, -105], "prefab": "npc_camp" }
+  ],
+  "npcs": [
+    { "id": "npc_chancellor", "displayName": "Chanceler Maia", "dialogueId": "chancellor_intro", "position": [20, 4, 24], "color": [66, 104, 171] },
+    { "id": "npc_steward", "displayName": "Intendente Nara", "dialogueId": "steward_farm_intro", "position": [-32, 4, 34], "color": [77, 142, 89] },
+    { "id": "npc_captain", "displayName": "Capitão Aderbal", "dialogueId": "captain_training_intro", "position": [-28, 4, -36], "color": [170, 70, 62] },
+    { "id": "npc_scholar", "displayName": "Mestra Lian", "dialogueId": "scholar_academy_intro", "position": [34, 4, -26], "color": [109, 85, 161] },
+    { "id": "npc_ambassador", "displayName": "Emissário Samir", "dialogueId": "ambassador_alliance_intro", "position": [54, 4, -6], "color": [210, 164, 75] },
+    { "id": "npc_merchant", "displayName": "Mercadora Bia", "dialogueId": "merchant_daily_reward", "position": [-54, 4, -4], "color": [177, 103, 59] }
+  ],
+  "wonders": [
+    { "id": "wonder_seven_mysteries", "displayName": "Obelisco dos Sete Mistérios", "enemyId": "ancient_guard", "position": [198, 1, 205], "prefab": "wonder_obelisk", "captureRadius": 55 }
+  ],
+  "labels": [
+    { "text": "Estrada Norte", "position": [0, 16, -145], "viewLayer": "World" },
+    { "text": "Planicie da Alianca", "position": [190, 18, -95], "viewLayer": "World" },
+    { "text": "Cordilheira do Ferro", "position": [-210, 22, -90], "viewLayer": "World" },
+    { "text": "Areias das Reliquias", "position": [170, 18, 190], "viewLayer": "World" }
+  ]
+}
