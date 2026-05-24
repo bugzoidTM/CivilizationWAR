@@ -53,6 +53,7 @@ local TrainTroops = ensureRemoteFunction("TrainTroops")
 local Research = ensureRemoteFunction("Research")
 local AttackNpc = ensureRemoteFunction("AttackNpc")
 local ExploreRegion = ensureRemoteFunction("ExploreRegion")
+local StartGatheringMarch = ensureRemoteFunction("StartGatheringMarch")
 
 WorldBuilder.Build(Config.EntryMapId)
 WorldMapService.Build()
@@ -119,6 +120,10 @@ end
 
 ExploreRegion.OnServerInvoke = function(player: Player, regionId: string)
 	return PlayerStateService.ExploreRegion(player, regionId)
+end
+
+StartGatheringMarch.OnServerInvoke = function(player: Player, resourceId: string)
+	return PlayerStateService.StartGatheringMarch(player, resourceId)
 end
 
 task.spawn(function()

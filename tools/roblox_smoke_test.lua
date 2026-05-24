@@ -107,6 +107,27 @@ local state = PlayerStateService.GetState(fakePlayer)
 assertTrue(state.resources.food >= 1200, "starting food missing")
 assertTrue(state.buildings.castle == 1, "starting castle level wrong")
 
+local foodBeforeGathering = state.resources.food
+local gatheringMarch = assertOk(PlayerStateService.StartGatheringMarch(fakePlayer, "food_01"), "start food gathering")
+assertTrue(gatheringMarch.march ~= nil, "gathering march missing")
+assertTrue(gatheringMarch.march.resourceId == "food_01", "gathering march target wrong")
+assertTrue(gatheringMarch.march.resource == "food", "gathering march resource wrong")
+assertTrue(gatheringMarch.march.workerCount == 1, "gathering should use one abstract worker")
+assertTrue(gatheringMarch.march.status == "outgoing", "gathering march should start outgoing")
+
+local duplicateGathering = PlayerStateService.StartGatheringMarch(fakePlayer, "food_01")
+assertTrue(duplicateGathering.ok == false, "duplicate gathering march should be blocked")
+assertTrue(duplicateGathering.error ~= nil, "duplicate gathering feedback missing")
+
+local gatheringSnapshot = PlayerStateService.GetSnapshot(fakePlayer)
+assertTrue(#gatheringSnapshot.marches == 1, "active gathering march missing from snapshot")
+assertTrue(gatheringSnapshot.marches[1].finishAt > gatheringSnapshot.serverTime, "gathering march timer missing")
+
+local completedGathering = PlayerStateService.DebugFinishAllMarches(fakePlayer)
+assertTrue(#completedGathering >= 1, "gathering march did not complete")
+assertTrue(state.resources.food > foodBeforeGathering, "gathering reward was not added")
+assertTrue(#state.reports >= 1 and state.reports[1].type == "gather", "gathering report missing")
+
 local farmConstruction = assertOk(PlayerStateService.UpgradeBuilding(fakePlayer, "farm"), "queue farm")
 assertTrue(farmConstruction.construction ~= nil, "farm construction missing")
 assertTrue((state.buildings.farm or 0) == 0, "farm should not complete instantly")

@@ -42,7 +42,7 @@ Derived from `CivilizationWAR_Documento_Implementacao_PRD_GDD_Prompts.md`.
 ## Phase 5 - Marches And Gathering
 
 - Create, display and resolve resource marches with duplicate blocking.
-- Status: pending.
+- Status: implemented for worker-based resource gathering. The first flow sends one abstract worker from the player castle to a resource node, blocks duplicate gathering on the same node, resolves rewards on return and stores a gather report.
 
 ## Phase 6 - PvE Camps
 

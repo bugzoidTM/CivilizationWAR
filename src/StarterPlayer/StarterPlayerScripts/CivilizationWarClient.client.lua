@@ -9,7 +9,9 @@ local Workspace = game:GetService("Workspace")
 local player = Players.LocalPlayer
 local mouse = player:GetMouse()
 local root = ReplicatedStorage:WaitForChild("CivilizationWar")
+local shared = root:WaitForChild("Shared")
 local remotes = root:WaitForChild("Remotes")
+local WorldConfig = require(shared:WaitForChild("WorldConfig"))
 
 local StateSnapshot = remotes:WaitForChild("StateSnapshot") :: RemoteEvent
 local DialogueEvent = remotes:WaitForChild("Dialogue") :: RemoteEvent
@@ -22,6 +24,7 @@ local TrainTroops = remotes:WaitForChild("TrainTroops") :: RemoteFunction
 local Research = remotes:WaitForChild("Research") :: RemoteFunction
 local AttackNpc = remotes:WaitForChild("AttackNpc") :: RemoteFunction
 local ExploreRegion = remotes:WaitForChild("ExploreRegion") :: RemoteFunction
+local StartGatheringMarch = remotes:WaitForChild("StartGatheringMarch") :: RemoteFunction
 
 type ViewMode = "Kingdom" | "World"
 
@@ -35,7 +38,7 @@ local resourceNames = {
 	gold = "Ouro",
 }
 local WORLD_INFO_DEFAULT_TEXT =
-	"Clique em um tile, recurso, acampamento ou castelo.\nAcoes de marcha ficam bloqueadas ate a proxima fase."
+	"Clique em um recurso para enviar trabalhador.\nAcampamentos ainda usam tropas em fase futura."
 
 local viewMode: ViewMode = "Kingdom"
 local latestState: any = nil
@@ -331,7 +334,7 @@ worldInfoPanel.BackgroundColor3 = Color3.fromRGB(21, 25, 30)
 worldInfoPanel.BackgroundTransparency = 0.1
 worldInfoPanel.BorderSizePixel = 0
 worldInfoPanel.Position = UDim2.new(1, -14, 1, -14)
-worldInfoPanel.Size = UDim2.fromOffset(340, 162)
+worldInfoPanel.Size = UDim2.fromOffset(360, 206)
 worldInfoPanel.Visible = false
 worldInfoPanel.Parent = gui
 addCorner(worldInfoPanel, 8)
@@ -357,9 +360,25 @@ worldInfoText.TextWrapped = true
 worldInfoText.TextXAlignment = Enum.TextXAlignment.Left
 worldInfoText.TextYAlignment = Enum.TextYAlignment.Top
 worldInfoText.Position = UDim2.fromOffset(12, 36)
-worldInfoText.Size = UDim2.new(1, -24, 1, -48)
+worldInfoText.Size = UDim2.new(1, -24, 1, -92)
 worldInfoText.Text = WORLD_INFO_DEFAULT_TEXT
 worldInfoText.Parent = worldInfoPanel
+
+local worldActionButton = Instance.new("TextButton")
+worldActionButton.Name = "WorldActionButton"
+worldActionButton.AnchorPoint = Vector2.new(0.5, 1)
+worldActionButton.BackgroundColor3 = Color3.fromRGB(72, 97, 116)
+worldActionButton.BorderSizePixel = 0
+worldActionButton.Font = Enum.Font.GothamBold
+worldActionButton.TextColor3 = Color3.fromRGB(252, 248, 235)
+worldActionButton.TextSize = 13
+worldActionButton.Text = "Enviar Coleta"
+worldActionButton.Visible = false
+worldActionButton.Position = UDim2.new(0.5, 0, 1, -12)
+worldActionButton.Size = UDim2.new(1, -24, 0, 34)
+worldActionButton.Parent = worldInfoPanel
+addCorner(worldActionButton, 7)
+addStroke(worldActionButton, 0.86)
 
 local selectionBox = Instance.new("SelectionBox")
 selectionBox.Name = "WorldSelectionBox"
@@ -393,6 +412,9 @@ fadeOverlay.Parent = gui
 local actionButtons: { [TextButton]: ViewMode | "Both" } = {}
 local buildButtons: { [string]: TextButton } = {}
 local selectedBuildingId = "castle"
+local selectedWorldResourceId: string? = nil
+local selectedWorldPart: BasePart? = nil
+local marchMarkers: { [string]: BasePart } = {}
 local latestSnapshotReceivedAt = os.clock()
 local latestServerTime = os.time()
 local nextConstructionPanelRefresh = 0
@@ -628,10 +650,6 @@ local function setViewMode(nextView: ViewMode): ()
 		selectionHighlight.Adornee = nil
 	else
 		worldInfoTitle.Text = "Mapa Mundial"
-		worldInfoText.Text =
-			"Clique em um tile, recurso, acampamento ou castelo.\nAções de marcha ficam bloqueadas até a próxima fase."
-	end
-	if viewMode == "World" then
 		worldInfoText.Text = WORLD_INFO_DEFAULT_TEXT
 	end
 end
@@ -745,17 +763,86 @@ local function getBiomeLabel(biome: string?): string
 	return "Indefinido"
 end
 
+local function getMarchDisplayStatus(march: any, now: number?): string
+	local currentTime = now or getAdjustedServerTime()
+	if currentTime >= (march.finishAt or math.huge) then
+		return "completed"
+	elseif currentTime >= (march.gatheringFinishAt or math.huge) then
+		return "returning"
+	elseif currentTime >= (march.outgoingFinishAt or math.huge) then
+		return "gathering"
+	end
+
+	return "outgoing"
+end
+
+local function getActiveResourceMarch(resourceId: string?): any?
+	if resourceId == nil or latestState == nil then
+		return nil
+	end
+
+	for _, march in ipairs(latestState.marches or {}) do
+		if
+			march.kind == "gather"
+			and march.resourceId == resourceId
+			and getMarchDisplayStatus(march) ~= "completed"
+		then
+			return march
+		end
+	end
+
+	return nil
+end
+
+local function getMarchStatusLabel(status: string?): string
+	if status == "outgoing" then
+		return "indo"
+	elseif status == "gathering" then
+		return "coletando"
+	elseif status == "returning" then
+		return "retornando"
+	end
+
+	return "aguardando"
+end
+
+local function updateWorldActionButton(resourceId: string?): ()
+	selectedWorldResourceId = resourceId
+	if resourceId == nil then
+		worldActionButton.Visible = false
+		return
+	end
+
+	local activeMarch = getActiveResourceMarch(resourceId)
+	worldActionButton.Visible = true
+	if activeMarch then
+		local status = getMarchDisplayStatus(activeMarch)
+		local remaining = math.max(0, (activeMarch.finishAt or getAdjustedServerTime()) - getAdjustedServerTime())
+		worldActionButton.Text = `{getMarchStatusLabel(status)} - {formatDuration(remaining)}`
+		worldActionButton.BackgroundColor3 = Color3.fromRGB(86, 83, 67)
+		worldActionButton.Active = false
+		worldActionButton.AutoButtonColor = false
+	else
+		worldActionButton.Text = "Enviar Coleta"
+		worldActionButton.BackgroundColor3 = Color3.fromRGB(72, 97, 116)
+		worldActionButton.Active = true
+		worldActionButton.AutoButtonColor = true
+	end
+end
+
 local function updateWorldInfo(selection: BasePart?): ()
 	if selection == nil then
 		selectionBox.Visible = false
 		selectionHighlight.Enabled = false
 		selectionHighlight.Adornee = nil
+		selectedWorldPart = nil
+		updateWorldActionButton(nil)
 		worldInfoTitle.Text = "Mapa Mundial"
-		worldInfoText.Text =
-			"Clique em um tile, recurso, acampamento ou castelo.\nAções de marcha ficam bloqueadas até a próxima fase."
+		worldInfoText.Text = WORLD_INFO_DEFAULT_TEXT
 		return
 	end
 
+	selectedWorldPart = selection
 	local selectionAdornee = getWorldSelectionAdornee(selection)
 	selectionBox.Adornee = selection
 	selectionBox.Visible = true
@@ -771,7 +858,8 @@ local function updateWorldInfo(selection: BasePart?): ()
 	local resource = selection:GetAttribute("Resource")
 	local amount = selection:GetAttribute("ResourceAmount")
 	local enemyId = selection:GetAttribute("EnemyId")
-	local action = selection:GetAttribute("WorldAction") or "Futuro: marchas ainda bloqueadas"
+	local action = selection:GetAttribute("WorldAction") or "Futuro: tropas e marchas militares"
+	local resourceId = if worldType == "resource" then selection:GetAttribute("WorldId") else nil
 
 	worldInfoTitle.Text = tostring(worldName)
 
@@ -785,13 +873,30 @@ local function updateWorldInfo(selection: BasePart?): ()
 	end
 	if resource then
 		table.insert(lines, `Recurso: {resourceNames[resource] or resource}   Quantidade: {formatAmount(amount)}`)
+		local activeMarch = getActiveResourceMarch(resourceId)
+		if activeMarch then
+			local status = getMarchDisplayStatus(activeMarch)
+			local remaining = math.max(0, (activeMarch.finishAt or getAdjustedServerTime()) - getAdjustedServerTime())
+			table.insert(lines, `Marcha: {getMarchStatusLabel(status)}   Tempo: {formatDuration(remaining)}`)
+		else
+			table.insert(lines, "Marcha: trabalhador disponivel para coleta")
+		end
 	end
 	if enemyId then
 		table.insert(lines, `Inimigo: {enemyId}`)
 	end
 
-	table.insert(lines, `Acao futura: {action}`)
+	if worldType == "resource" then
+		if getActiveResourceMarch(resourceId) then
+			table.insert(lines, "Acao: coleta em andamento")
+		else
+			table.insert(lines, "Acao: Enviar trabalhador para coleta")
+		end
+	else
+		table.insert(lines, `Acao futura: {action}`)
+	end
 	worldInfoText.Text = table.concat(lines, "\n")
+	updateWorldActionButton(resourceId)
 end
 
 local function updateHud(state: any): ()
@@ -835,6 +940,94 @@ local function updateHud(state: any): ()
 
 	updateBuildButtons(state)
 	updateConstructionPanel()
+	if selectedWorldPart then
+		updateWorldInfo(selectedWorldPart)
+	end
+end
+
+local function getMarchMarkerFolder(): Folder?
+	local worldRoot = getWorldRoot()
+	if worldRoot == nil then
+		return nil
+	end
+
+	local existing = worldRoot:FindFirstChild("ClientMarchMarkers")
+	if existing and existing:IsA("Folder") then
+		return existing
+	end
+
+	local folder = Instance.new("Folder")
+	folder.Name = "ClientMarchMarkers"
+	folder:SetAttribute("ViewLayer", "World")
+	folder.Parent = worldRoot
+	return folder
+end
+
+local function getMarchMarkerPosition(march: any): Vector3
+	local now = getAdjustedServerTime()
+	local status = getMarchDisplayStatus(march, now)
+	local originX = march.originX or WorldConfig.PlayerCastle.x
+	local originY = march.originY or WorldConfig.PlayerCastle.y
+	local targetX = march.targetX or originX
+	local targetY = march.targetY or originY
+	local x = originX
+	local y = originY
+
+	if status == "outgoing" then
+		local duration = math.max(1, (march.outgoingFinishAt or now) - (march.startAt or now))
+		local progress = math.clamp((now - (march.startAt or now)) / duration, 0, 1)
+		x = originX + (targetX - originX) * progress
+		y = originY + (targetY - originY) * progress
+	elseif status == "gathering" then
+		x = targetX
+		y = targetY
+	elseif status == "returning" then
+		local duration = math.max(1, (march.finishAt or now) - (march.gatheringFinishAt or now))
+		local progress = math.clamp((now - (march.gatheringFinishAt or now)) / duration, 0, 1)
+		x = targetX + (originX - targetX) * progress
+		y = targetY + (originY - targetY) * progress
+	end
+
+	return WorldConfig.GetTilePosition(x, y) + Vector3.new(0, 7.5, 0)
+end
+
+local function updateMarchMarkers(): ()
+	local folder = getMarchMarkerFolder()
+	if folder == nil then
+		return
+	end
+
+	local activeIds = {}
+	for _, march in ipairs((latestState and latestState.marches) or {}) do
+		if march.kind == "gather" and getMarchDisplayStatus(march) ~= "completed" then
+			activeIds[march.id] = true
+			local marker = marchMarkers[march.id]
+			if marker == nil or marker.Parent == nil then
+				marker = Instance.new("Part")
+				marker.Name = march.id
+				marker.Shape = Enum.PartType.Ball
+				marker.Anchored = true
+				marker.CanCollide = false
+				marker.CastShadow = false
+				marker.Size = Vector3.new(3.4, 3.4, 3.4)
+				marker.Color = Color3.fromRGB(130, 220, 255)
+				marker.Material = Enum.Material.Neon
+				marker:SetAttribute("ViewLayer", "World")
+				marker.Parent = folder
+				marchMarkers[march.id] = marker
+			end
+
+			marker.Position = getMarchMarkerPosition(march)
+			marker.Transparency = if viewMode == "World" then 0 else 1
+		end
+	end
+
+	for id, marker in pairs(marchMarkers) do
+		if not activeIds[id] then
+			marker:Destroy()
+			marchMarkers[id] = nil
+		end
+	end
 end
 
 local function describeGains(gains: any): string
@@ -873,6 +1066,8 @@ local function handleResult(result: any): ()
 
 	if result.gains then
 		setToast(describeGains(result.gains))
+	elseif result.march then
+		setToast(`Coleta enviada: {result.march.resourceName or result.march.resourceId}.`)
 	elseif result.construction then
 		setToast(
 			`{result.construction.displayName or result.construction.buildingId} Nv.{result.construction.targetLevel} em construcao.`
@@ -972,6 +1167,17 @@ popupClose.Activated:Connect(function()
 	popup.Visible = false
 end)
 
+worldActionButton.Activated:Connect(function()
+	if selectedWorldResourceId == nil or worldActionButton.Active == false then
+		return
+	end
+
+	handleResult(StartGatheringMarch:InvokeServer(selectedWorldResourceId))
+	if selectedWorldPart then
+		updateWorldInfo(selectedWorldPart)
+	end
+end)
+
 mouse.Button1Down:Connect(function()
 	if viewMode ~= "World" then
 		return
@@ -1015,7 +1221,12 @@ RunService.RenderStepped:Connect(function()
 	if os.clock() >= nextConstructionPanelRefresh then
 		nextConstructionPanelRefresh = os.clock() + 0.5
 		updateConstructionPanel()
+		if viewMode == "World" and selectedWorldPart then
+			updateWorldInfo(selectedWorldPart)
+		end
 	end
+
+	updateMarchMarkers()
 end)
 
 task.spawn(function()

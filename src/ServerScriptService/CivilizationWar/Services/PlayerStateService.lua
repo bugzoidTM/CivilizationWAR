@@ -11,6 +11,7 @@ local MissionTracker = require(Shared:WaitForChild("MissionTracker"))
 local CombatResolver = require(Shared:WaitForChild("CombatResolver"))
 local ConstructionService = require(script.Parent.ConstructionService)
 local EconomyService = require(script.Parent.EconomyService)
+local MarchService = require(script.Parent.MarchService)
 
 local PlayerStateService = {}
 
@@ -83,9 +84,47 @@ local function applyConstructionCompletions(state: any, completed: { any }): ()
 	end
 end
 
+local function addGatherReport(state: any, march: any): ()
+	local amount = march.reward and march.reward[march.resource] or 0
+	table.insert(state.reports, 1, {
+		type = "gather",
+		title = "Coleta concluida",
+		resourceId = march.resourceId,
+		resourceName = march.resourceName,
+		resource = march.resource,
+		amount = amount,
+		reward = march.reward,
+		completedAt = march.finishAt or os.time(),
+	})
+	if #state.reports > 10 then
+		table.remove(state.reports)
+	end
+end
+
+local function applyCompletedMarches(state: any, completed: { any }): ()
+	for _, march in ipairs(completed) do
+		Economy.AddResources(state.resources, march.reward)
+		for resource, amount in pairs(march.reward or {}) do
+			state.stats.collectedResources[resource] = (state.stats.collectedResources[resource] or 0) + amount
+			applyMissionEvent(state, {
+				type = "collect_resource",
+				resource = resource,
+				amount = amount,
+			})
+		end
+		addGatherReport(state, march)
+	end
+end
+
 local function updateConstructionQueue(state: any, now: number?): { any }
 	local completed = ConstructionService.UpdateQueue(state, now or os.time())
 	applyConstructionCompletions(state, completed)
+	return completed
+end
+
+local function updateMarches(state: any, now: number?): { any }
+	local completed = MarchService.UpdateMarches(state, now or os.time())
+	applyCompletedMarches(state, completed)
 	return completed
 end
 
@@ -106,6 +145,7 @@ local function ensureStateShape(state: any, player: Player): any
 	state.stats.exploredRegions = state.stats.exploredRegions or {}
 	state.reports = state.reports or {}
 	state.constructionQueue = state.constructionQueue or {}
+	MarchService.EnsureState(state)
 	state.missionState = state.missionState or MissionTracker.CreateState(Config.EntryMissionId)
 	state.lastTick = state.lastTick or os.time()
 	state.lastManualCollect = state.lastManualCollect or 0
@@ -145,6 +185,7 @@ end
 
 local function applyOfflineProgress(state: any, elapsedSeconds: number, now: number): any
 	local completed = updateConstructionQueue(state, now)
+	local completedMarches = updateMarches(state, now)
 	local offline = EconomyService.ApplyOfflineProduction(state, elapsedSeconds, Config.MaxOfflineSeconds, now)
 
 	for resource, amount in pairs(offline.resources or {}) do
@@ -157,6 +198,7 @@ local function applyOfflineProgress(state: any, elapsedSeconds: number, now: num
 	end
 
 	offline.completedConstructions = #completed
+	offline.completedMarches = #completedMarches
 	return offline
 end
 
@@ -267,6 +309,11 @@ function PlayerStateService.CreateState(player: Player, civilizationId: string?)
 		},
 		reports = {},
 		constructionQueue = {},
+		marches = {},
+		nextMarchId = 1,
+		workers = {
+			total = 3,
+		},
 		missionState = MissionTracker.CreateState(Config.EntryMissionId),
 		lastTick = os.time(),
 		lastManualCollect = 0,
@@ -325,6 +372,7 @@ function PlayerStateService.SaveState(player: Player): boolean
 	end
 
 	updateConstructionQueue(state, os.time())
+	updateMarches(state, os.time())
 	state.lastSavedAt = os.time()
 	local payload = clone(state)
 
@@ -351,6 +399,13 @@ function PlayerStateService.DebugFinishAllConstructions(player: Player): { any }
 	return updateConstructionQueue(state, now)
 end
 
+function PlayerStateService.DebugFinishAllMarches(player: Player): { any }
+	local state = PlayerStateService.GetState(player)
+	local completed = MarchService.DebugFinishAllMarches(state, os.time())
+	applyCompletedMarches(state, completed)
+	return completed
+end
+
 function PlayerStateService.DebugApplyOfflineProduction(player: Player, elapsedSeconds: number): any
 	local state = PlayerStateService.GetState(player)
 	return applyOfflineProgress(state, elapsedSeconds, os.time())
@@ -360,11 +415,13 @@ function PlayerStateService.GetSnapshot(player: Player): any
 	local state = PlayerStateService.GetState(player)
 	local now = os.time()
 	updateConstructionQueue(state, now)
+	updateMarches(state, now)
 	local snapshot = clone(state)
 	snapshot.serverTime = now
 	snapshot.maxConstructionQueue = Config.MaxConstructionQueue
 	snapshot.productionPerMinute = EconomyService.CalculateProductionPerMinute(state)
 	snapshot.constructionQueue = ConstructionService.GetQueueSnapshot(state, now)
+	snapshot.marches = MarchService.GetMarchSnapshot(state, now)
 	snapshot.buildingActions = ConstructionService.GetActionSnapshot(state, now)
 	snapshot.activeMission = MissionTracker.GetActiveMission(state.missionState)
 
@@ -374,6 +431,7 @@ end
 function PlayerStateService.Tick(player: Player, deltaSeconds: number): any
 	local state = PlayerStateService.GetState(player)
 	updateConstructionQueue(state, os.time())
+	updateMarches(state, os.time())
 	local gains = EconomyService.ApplyProduction(state, deltaSeconds, os.time())
 
 	for resource, amount in pairs(gains) do
@@ -433,6 +491,28 @@ function PlayerStateService.CollectProduction(player: Player): any
 	return {
 		ok = true,
 		gains = gains,
+		state = PlayerStateService.GetSnapshot(player),
+	}
+end
+
+function PlayerStateService.StartGatheringMarch(player: Player, resourceId: string): any
+	local state = PlayerStateService.GetState(player)
+	local now = os.time()
+	updateConstructionQueue(state, now)
+	updateMarches(state, now)
+
+	local result = MarchService.StartGatheringMarch(state, resourceId, now)
+	if not result.ok then
+		return {
+			ok = false,
+			error = result.error or "Coleta indisponivel.",
+			state = PlayerStateService.GetSnapshot(player),
+		}
+	end
+
+	return {
+		ok = true,
+		march = result.march,
 		state = PlayerStateService.GetSnapshot(player),
 	}
 end
