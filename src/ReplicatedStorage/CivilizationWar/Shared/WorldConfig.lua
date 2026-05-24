@@ -2,8 +2,9 @@
 
 local WorldConfig = {
 	GridSize = 64,
-	TileSize = 4,
-	Origin = Vector3.new(-128, 0.6, -128),
+	RenderSize = 32,
+	TileSize = 8,
+	Origin = Vector3.new(-256, 0.6, -256),
 	PlayerCastle = {
 		id = "player_castle",
 		name = "Castelo do Comandante",

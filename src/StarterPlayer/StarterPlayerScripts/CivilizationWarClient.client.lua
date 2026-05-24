@@ -34,11 +34,14 @@ local resourceNames = {
 	silver = "Prata",
 	gold = "Ouro",
 }
+local WORLD_INFO_DEFAULT_TEXT =
+	"Clique em um tile, recurso, acampamento ou castelo.\nAcoes de marcha ficam bloqueadas ate a proxima fase."
 
 local viewMode: ViewMode = "Kingdom"
 local latestState: any = nil
 local activeCameraTween: Tween? = nil
 local visibilityCache: { [Instance]: { transparency: number?, canCollide: boolean?, enabled: boolean? } } = {}
+local activeFadeTween: Tween? = nil
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "CivilizationWARHUD"
@@ -296,6 +299,31 @@ popupText.Position = UDim2.fromOffset(14, 34)
 popupText.Size = UDim2.new(1, -28, 1, -44)
 popupText.Parent = popup
 
+local worldTitlePanel = Instance.new("Frame")
+worldTitlePanel.Name = "WorldTitlePanel"
+worldTitlePanel.AnchorPoint = Vector2.new(0.5, 0)
+worldTitlePanel.BackgroundColor3 = Color3.fromRGB(18, 22, 26)
+worldTitlePanel.BackgroundTransparency = 0.08
+worldTitlePanel.BorderSizePixel = 0
+worldTitlePanel.Position = UDim2.new(0.5, 0, 0, 62)
+worldTitlePanel.Size = UDim2.fromOffset(260, 42)
+worldTitlePanel.Visible = false
+worldTitlePanel.Parent = gui
+addCorner(worldTitlePanel, 8)
+addStroke(worldTitlePanel, 0.84)
+
+local worldTitle = Instance.new("TextLabel")
+worldTitle.Name = "WorldTitle"
+worldTitle.BackgroundTransparency = 1
+worldTitle.Font = Enum.Font.GothamBold
+worldTitle.Text = "Mapa Mundial"
+worldTitle.TextColor3 = Color3.fromRGB(247, 235, 206)
+worldTitle.TextSize = 20
+worldTitle.TextXAlignment = Enum.TextXAlignment.Center
+worldTitle.TextYAlignment = Enum.TextYAlignment.Center
+worldTitle.Size = UDim2.fromScale(1, 1)
+worldTitle.Parent = worldTitlePanel
+
 local worldInfoPanel = Instance.new("Frame")
 worldInfoPanel.Name = "WorldInfoPanel"
 worldInfoPanel.AnchorPoint = Vector2.new(1, 1)
@@ -330,7 +358,7 @@ worldInfoText.TextXAlignment = Enum.TextXAlignment.Left
 worldInfoText.TextYAlignment = Enum.TextYAlignment.Top
 worldInfoText.Position = UDim2.fromOffset(12, 36)
 worldInfoText.Size = UDim2.new(1, -24, 1, -48)
-worldInfoText.Text = "Clique em um tile, recurso, acampamento ou castelo."
+worldInfoText.Text = WORLD_INFO_DEFAULT_TEXT
 worldInfoText.Parent = worldInfoPanel
 
 local selectionBox = Instance.new("SelectionBox")
@@ -340,6 +368,27 @@ selectionBox.LineThickness = 0.045
 selectionBox.SurfaceTransparency = 0.82
 selectionBox.Visible = false
 selectionBox.Parent = gui
+
+local selectionHighlight = Instance.new("Highlight")
+selectionHighlight.Name = "WorldSelectionHighlight"
+selectionHighlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+selectionHighlight.FillColor = Color3.fromRGB(255, 226, 125)
+selectionHighlight.FillTransparency = 0.78
+selectionHighlight.OutlineColor = Color3.fromRGB(255, 247, 195)
+selectionHighlight.OutlineTransparency = 0
+selectionHighlight.Enabled = false
+selectionHighlight.Parent = gui
+
+local fadeOverlay = Instance.new("Frame")
+fadeOverlay.Name = "ViewFadeOverlay"
+fadeOverlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+fadeOverlay.BackgroundTransparency = 1
+fadeOverlay.BorderSizePixel = 0
+fadeOverlay.Position = UDim2.fromScale(0, 0)
+fadeOverlay.Size = UDim2.fromScale(1, 1)
+fadeOverlay.Visible = false
+fadeOverlay.ZIndex = 100
+fadeOverlay.Parent = gui
 
 local actionButtons: { [TextButton]: ViewMode | "Both" } = {}
 local buildButtons: { [string]: TextButton } = {}
@@ -464,7 +513,7 @@ local function applyViewLayers(): ()
 
 	for _, instance in ipairs(worldRoot:GetDescendants()) do
 		local layer = getInheritedViewLayer(instance)
-		local shouldShow = layer == "Shared" or layer == viewMode
+		local shouldShow = layer == viewMode or (viewMode == "Kingdom" and layer == "Shared")
 		setLayerVisibility(instance, shouldShow)
 	end
 end
@@ -499,9 +548,9 @@ local function setCameraForView(): ()
 		focus = Vector3.new(0, 5, 0)
 		fieldOfView = 35
 	else
-		cameraPosition = Vector3.new(0, 285, 250)
+		cameraPosition = Vector3.new(0, 330, 210)
 		focus = Vector3.new(0, 0, 0)
-		fieldOfView = 30
+		fieldOfView = 36
 	end
 
 	camera.CameraType = Enum.CameraType.Scriptable
@@ -525,12 +574,49 @@ local function refreshActionVisibility(): ()
 	end
 	modeButton.Text = if viewMode == "Kingdom" then "Abrir Mundo" else "Voltar ao Reino"
 	actionBar.Visible = viewMode == "Kingdom"
+	missionPanel.Visible = viewMode == "Kingdom"
 	summaryPanel.Visible = viewMode == "Kingdom"
 	constructionPanel.Visible = viewMode == "Kingdom"
+	worldTitlePanel.Visible = viewMode == "World"
 	worldInfoPanel.Visible = viewMode == "World"
 end
 
+local function playViewFade(): ()
+	if activeFadeTween then
+		activeFadeTween:Cancel()
+	end
+
+	fadeOverlay.Visible = true
+	fadeOverlay.BackgroundTransparency = 1
+
+	local darken = TweenService:Create(
+		fadeOverlay,
+		TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		{ BackgroundTransparency = 0.38 }
+	)
+	local lighten = TweenService:Create(
+		fadeOverlay,
+		TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		{ BackgroundTransparency = 1 }
+	)
+	activeFadeTween = lighten
+	darken.Completed:Connect(function()
+		lighten:Play()
+	end)
+	lighten.Completed:Connect(function()
+		if activeFadeTween == lighten then
+			fadeOverlay.Visible = false
+			activeFadeTween = nil
+		end
+	end)
+	darken:Play()
+end
+
 local function setViewMode(nextView: ViewMode): ()
+	if viewMode ~= nextView then
+		playViewFade()
+	end
+
 	viewMode = nextView
 	applyViewLayers()
 	setCharacterVisible(viewMode == "Kingdom")
@@ -538,10 +624,15 @@ local function setViewMode(nextView: ViewMode): ()
 	refreshActionVisibility()
 	if viewMode == "Kingdom" then
 		selectionBox.Visible = false
+		selectionHighlight.Enabled = false
+		selectionHighlight.Adornee = nil
 	else
 		worldInfoTitle.Text = "Mapa Mundial"
 		worldInfoText.Text =
 			"Clique em um tile, recurso, acampamento ou castelo.\nAções de marcha ficam bloqueadas até a próxima fase."
+	end
+	if viewMode == "World" then
+		worldInfoText.Text = WORLD_INFO_DEFAULT_TEXT
 	end
 end
 
@@ -616,6 +707,18 @@ local function findWorldSelectable(target: Instance?): BasePart?
 	return nil
 end
 
+local function getWorldSelectionAdornee(selection: BasePart): Instance
+	local current: Instance? = selection
+	while current do
+		if current:GetAttribute("WorldMarkerShape") ~= nil and current:GetAttribute("WorldSelectable") == true then
+			return current
+		end
+		current = current.Parent
+	end
+
+	return selection
+end
+
 local function getWorldTypeLabel(worldType: string?): string
 	if worldType == "playerCastle" then
 		return "Castelo"
@@ -645,14 +748,19 @@ end
 local function updateWorldInfo(selection: BasePart?): ()
 	if selection == nil then
 		selectionBox.Visible = false
+		selectionHighlight.Enabled = false
+		selectionHighlight.Adornee = nil
 		worldInfoTitle.Text = "Mapa Mundial"
 		worldInfoText.Text =
 			"Clique em um tile, recurso, acampamento ou castelo.\nAções de marcha ficam bloqueadas até a próxima fase."
 		return
 	end
 
+	local selectionAdornee = getWorldSelectionAdornee(selection)
 	selectionBox.Adornee = selection
 	selectionBox.Visible = true
+	selectionHighlight.Adornee = selectionAdornee
+	selectionHighlight.Enabled = true
 
 	local worldName = selection:GetAttribute("WorldName") or selection.Name
 	local worldType = selection:GetAttribute("WorldType")
@@ -682,7 +790,7 @@ local function updateWorldInfo(selection: BasePart?): ()
 		table.insert(lines, `Inimigo: {enemyId}`)
 	end
 
-	table.insert(lines, tostring(action))
+	table.insert(lines, `Acao futura: {action}`)
 	worldInfoText.Text = table.concat(lines, "\n")
 end
 
@@ -869,7 +977,11 @@ mouse.Button1Down:Connect(function()
 		return
 	end
 
-	updateWorldInfo(findWorldSelectable(mouse.Target))
+	local selection = findWorldSelectable(mouse.Target)
+	updateWorldInfo(selection)
+	if selection == nil then
+		worldInfoText.Text = WORLD_INFO_DEFAULT_TEXT
+	end
 end)
 
 StateSnapshot.OnClientEvent:Connect(updateHud)

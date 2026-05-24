@@ -52,7 +52,9 @@ WorldMapService.Build()
 local worldMap = world:FindFirstChild("WorldMap")
 assertTrue(worldMap ~= nil, "world map was not built")
 assertTrue(worldMap:GetAttribute("GridSize") == 64, "world map grid size wrong")
-assertTrue(#worldMap.Tiles:GetChildren() == 64 * 64, "world map tile count wrong")
+assertTrue(worldMap:GetAttribute("RenderSize") == 32, "world map render size should be 32")
+assertTrue(worldMap:GetAttribute("TileSize") == 8, "world map tile size should be readable")
+assertTrue(#worldMap.Tiles:GetChildren() == 32 * 32, "world map should render a readable 32x32 area")
 assertTrue(#worldMap.Markers:GetChildren() == 7, "world map marker count wrong")
 assertTrue(worldMap.Markers:FindFirstChild("player_castle") ~= nil, "player castle marker missing")
 assertTrue(worldMap.Markers:FindFirstChild("wood_01") ~= nil, "wood marker missing")
@@ -61,7 +63,40 @@ assertTrue(worldMap.Markers:FindFirstChild("stone_01") ~= nil, "stone marker mis
 assertTrue(worldMap.Markers:FindFirstChild("iron_01") ~= nil, "iron marker missing")
 assertTrue(worldMap.Markers:FindFirstChild("camp_bandit_scouts_01") ~= nil, "first npc camp marker missing")
 assertTrue(worldMap.Markers:FindFirstChild("camp_rebel_raiders_01") ~= nil, "second npc camp marker missing")
-assertTrue(worldMap.Markers.wood_01:GetAttribute("WorldSelectable") == true, "resource marker is not selectable")
+assertTrue(worldMap.Markers.player_castle:IsA("Model"), "castle marker should be a distinct model")
+assertTrue(
+	worldMap.Markers.player_castle:GetAttribute("WorldMarkerShape") == "castle_keep",
+	"castle marker shape missing"
+)
+assertTrue(worldMap.Markers.player_castle:GetAttribute("WorldSelectable") == true, "castle marker is not selectable")
+assertTrue(
+	worldMap.Markers.player_castle:GetAttribute("VisualPriority") == 100,
+	"castle should be most visually prominent"
+)
+assertTrue(
+	worldMap.Markers.wood_01:GetAttribute("WorldMarkerShape") == "resource_pillar",
+	"resource marker shape missing"
+)
+assertTrue(
+	worldMap.Markers.camp_bandit_scouts_01:GetAttribute("WorldMarkerShape") == "npc_tent",
+	"camp marker shape missing"
+)
+assertTrue(
+	worldMap.Markers.wood_01.PrimaryPart:GetAttribute("WorldSelectable") == true,
+	"resource marker part is not selectable"
+)
+assertTrue(
+	worldMap.Markers.camp_bandit_scouts_01.PrimaryPart:GetAttribute("WorldAction") ~= nil,
+	"camp action feedback missing"
+)
+assertTrue(worldMap:GetAttribute("ViewLayer") == "World", "world map layer should be World")
+assertTrue(worldMap.Tiles.Tile_32_32:GetAttribute("WorldSelectable") == true, "world tile selection missing")
+assertTrue(worldMap.Tiles.Tile_32_32:GetAttribute("Biome") ~= nil, "world tile biome feedback missing")
+assertTrue(
+	worldMap.Markers.player_castle.PrimaryPart:GetAttribute("WorldType") == "playerCastle",
+	"castle selection type missing"
+)
+assertTrue(world.City:GetAttribute("ViewLayer") == "Kingdom", "kingdom mode layer missing")
 
 local fakePlayer = {
 	UserId = -260523,

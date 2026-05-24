@@ -30,7 +30,14 @@ Derived from `CivilizationWAR_Documento_Implementacao_PRD_GDD_Prompts.md`.
 ## Phase 4 - Minimal World Map
 
 - 64x64 or 128x128 world data grid, local render window, map camera and biomes.
-- Status: implemented as a 64x64 graybox world with selectable tiles, player castle, four resource nodes and two NPC camps.
+- Status: implemented as a 64x64 logical grid with a readable 32x32 graybox render window, selectable tiles, player castle, four resource nodes and two NPC camps.
+
+## Phase 4.1 - World Map Readability
+
+- Larger 8-stud map tiles, reduced visible grid density and distinct graybox markers for castle, resources and NPC camps.
+- World title, selection panel, highlight and quick fade on Kingdom/World transition.
+- Kingdom geometry is hidden while the strategic world layer is active.
+- Status: implemented.
 
 ## Phase 5 - Marches And Gathering
 
