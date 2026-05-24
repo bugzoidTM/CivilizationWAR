@@ -30,7 +30,7 @@ Derived from `CivilizationWAR_Documento_Implementacao_PRD_GDD_Prompts.md`.
 ## Phase 4 - Minimal World Map
 
 - 64x64 or 128x128 world data grid, local render window, map camera and biomes.
-- Status: pending.
+- Status: implemented as a 64x64 graybox world with selectable tiles, player castle, four resource nodes and two NPC camps.
 
 ## Phase 5 - Marches And Gathering
 

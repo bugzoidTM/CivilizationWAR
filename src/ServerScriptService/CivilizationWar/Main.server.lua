@@ -9,6 +9,7 @@ local shared = root:WaitForChild("Shared")
 local Config = require(shared:WaitForChild("Config"))
 local PlayerStateService = require(script.Parent.Services.PlayerStateService)
 local WorldBuilder = require(script.Parent.Services.WorldBuilder)
+local WorldMapService = require(script.Parent.Services.WorldMapService)
 local NPCService = require(script.Parent.Services.NPCService)
 local MarchService = require(script.Parent.Services.MarchService)
 
@@ -54,6 +55,7 @@ local AttackNpc = ensureRemoteFunction("AttackNpc")
 local ExploreRegion = ensureRemoteFunction("ExploreRegion")
 
 WorldBuilder.Build(Config.EntryMapId)
+WorldMapService.Build()
 MarchService.Configure({
 	playerStateService = PlayerStateService,
 })

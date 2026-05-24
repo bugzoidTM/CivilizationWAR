@@ -17,10 +17,10 @@
     { "id": "command_deck", "name": "Sala de Comando", "position": [0, 0.35, 76], "size": [44, 1, 24], "color": [102, 86, 66], "material": "Wood", "viewLayer": "Kingdom" },
     { "id": "inner_road_east", "name": "Rua Leste", "position": [35, 0.2, 0], "size": [10, 1, 132], "color": [132, 111, 78], "material": "Ground", "viewLayer": "Kingdom" },
     { "id": "inner_road_west", "name": "Rua Oeste", "position": [-35, 0.2, 0], "size": [10, 1, 132], "color": [132, 111, 78], "material": "Ground", "viewLayer": "Kingdom" },
-    { "id": "north_road", "name": "Estrada Norte", "position": [0, 0.15, -145], "size": [22, 1, 210], "color": [135, 116, 82], "material": "Ground", "viewLayer": "World" },
-    { "id": "alliance_plain", "name": "Planicie da Alianca", "position": [190, 0.1, -95], "size": [160, 1, 130], "color": [96, 151, 98], "material": "Grass", "viewLayer": "World" },
-    { "id": "iron_ridge", "name": "Cordilheira do Ferro", "position": [-210, 2, -90], "size": [150, 7, 115], "color": [101, 111, 116], "material": "Rock", "viewLayer": "World" },
-    { "id": "relic_sands", "name": "Areias das Reliquias", "position": [170, 0.1, 190], "size": [170, 1, 130], "color": [196, 176, 124], "material": "Sand", "viewLayer": "World" }
+    { "id": "north_road", "name": "Estrada Norte", "position": [0, 0.15, -145], "size": [22, 1, 210], "color": [135, 116, 82], "material": "Ground", "viewLayer": "LegacyWorld" },
+    { "id": "alliance_plain", "name": "Planicie da Alianca", "position": [190, 0.1, -95], "size": [160, 1, 130], "color": [96, 151, 98], "material": "Grass", "viewLayer": "LegacyWorld" },
+    { "id": "iron_ridge", "name": "Cordilheira do Ferro", "position": [-210, 2, -90], "size": [150, 7, 115], "color": [101, 111, 116], "material": "Rock", "viewLayer": "LegacyWorld" },
+    { "id": "relic_sands", "name": "Areias das Reliquias", "position": [170, 0.1, 190], "size": [170, 1, 130], "color": [196, 176, 124], "material": "Sand", "viewLayer": "LegacyWorld" }
   ],
   "citySlots": [
     { "id": "player_city_01", "owner": "player", "position": [0, 1.5, 0], "rotation": [0, 0, 0], "prefab": "castle" },
@@ -70,9 +70,9 @@
     { "id": "wonder_seven_mysteries", "displayName": "Obelisco dos Sete Mistérios", "enemyId": "ancient_guard", "position": [198, 1, 205], "prefab": "wonder_obelisk", "captureRadius": 55 }
   ],
   "labels": [
-    { "text": "Estrada Norte", "position": [0, 16, -145], "viewLayer": "World" },
-    { "text": "Planicie da Alianca", "position": [190, 18, -95], "viewLayer": "World" },
-    { "text": "Cordilheira do Ferro", "position": [-210, 22, -90], "viewLayer": "World" },
-    { "text": "Areias das Reliquias", "position": [170, 18, 190], "viewLayer": "World" }
+    { "text": "Estrada Norte", "position": [0, 16, -145], "viewLayer": "LegacyWorld" },
+    { "text": "Planicie da Alianca", "position": [190, 18, -95], "viewLayer": "LegacyWorld" },
+    { "text": "Cordilheira do Ferro", "position": [-210, 22, -90], "viewLayer": "LegacyWorld" },
+    { "text": "Areias das Reliquias", "position": [170, 18, 190], "viewLayer": "LegacyWorld" }
   ]
 }

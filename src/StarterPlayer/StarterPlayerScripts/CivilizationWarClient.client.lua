@@ -7,6 +7,7 @@ local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 
 local player = Players.LocalPlayer
+local mouse = player:GetMouse()
 local root = ReplicatedStorage:WaitForChild("CivilizationWar")
 local remotes = root:WaitForChild("Remotes")
 
@@ -148,16 +149,17 @@ missionText.Parent = missionPanel
 
 local modeButton = Instance.new("TextButton")
 modeButton.Name = "ModeButton"
-modeButton.AnchorPoint = Vector2.new(1, 0)
+modeButton.AnchorPoint = Vector2.new(0.5, 1)
 modeButton.BackgroundColor3 = Color3.fromRGB(72, 97, 116)
 modeButton.BorderSizePixel = 0
 modeButton.Font = Enum.Font.GothamBold
 modeButton.TextColor3 = Color3.fromRGB(252, 248, 235)
 modeButton.TextSize = 14
-modeButton.Position = UDim2.new(1, -14, 0, 14)
+modeButton.Position = UDim2.new(0.5, 0, 1, -146)
 modeButton.Size = UDim2.fromOffset(154, 38)
 modeButton.Parent = gui
 addCorner(modeButton, 8)
+addStroke(modeButton, 0.82)
 
 local summaryPanel = Instance.new("Frame")
 summaryPanel.Name = "SummaryPanel"
@@ -293,6 +295,51 @@ popupText.TextYAlignment = Enum.TextYAlignment.Top
 popupText.Position = UDim2.fromOffset(14, 34)
 popupText.Size = UDim2.new(1, -28, 1, -44)
 popupText.Parent = popup
+
+local worldInfoPanel = Instance.new("Frame")
+worldInfoPanel.Name = "WorldInfoPanel"
+worldInfoPanel.AnchorPoint = Vector2.new(1, 1)
+worldInfoPanel.BackgroundColor3 = Color3.fromRGB(21, 25, 30)
+worldInfoPanel.BackgroundTransparency = 0.1
+worldInfoPanel.BorderSizePixel = 0
+worldInfoPanel.Position = UDim2.new(1, -14, 1, -14)
+worldInfoPanel.Size = UDim2.fromOffset(340, 162)
+worldInfoPanel.Visible = false
+worldInfoPanel.Parent = gui
+addCorner(worldInfoPanel, 8)
+addStroke(worldInfoPanel, 0.86)
+
+local worldInfoTitle = Instance.new("TextLabel")
+worldInfoTitle.BackgroundTransparency = 1
+worldInfoTitle.Font = Enum.Font.GothamBold
+worldInfoTitle.TextColor3 = Color3.fromRGB(247, 235, 206)
+worldInfoTitle.TextSize = 15
+worldInfoTitle.TextXAlignment = Enum.TextXAlignment.Left
+worldInfoTitle.Position = UDim2.fromOffset(12, 10)
+worldInfoTitle.Size = UDim2.new(1, -24, 0, 20)
+worldInfoTitle.Text = "Mapa Mundial"
+worldInfoTitle.Parent = worldInfoPanel
+
+local worldInfoText = Instance.new("TextLabel")
+worldInfoText.BackgroundTransparency = 1
+worldInfoText.Font = Enum.Font.Gotham
+worldInfoText.TextColor3 = Color3.fromRGB(222, 228, 231)
+worldInfoText.TextSize = 12
+worldInfoText.TextWrapped = true
+worldInfoText.TextXAlignment = Enum.TextXAlignment.Left
+worldInfoText.TextYAlignment = Enum.TextYAlignment.Top
+worldInfoText.Position = UDim2.fromOffset(12, 36)
+worldInfoText.Size = UDim2.new(1, -24, 1, -48)
+worldInfoText.Text = "Clique em um tile, recurso, acampamento ou castelo."
+worldInfoText.Parent = worldInfoPanel
+
+local selectionBox = Instance.new("SelectionBox")
+selectionBox.Name = "WorldSelectionBox"
+selectionBox.Color3 = Color3.fromRGB(255, 230, 130)
+selectionBox.LineThickness = 0.045
+selectionBox.SurfaceTransparency = 0.82
+selectionBox.Visible = false
+selectionBox.Parent = gui
 
 local actionButtons: { [TextButton]: ViewMode | "Both" } = {}
 local buildButtons: { [string]: TextButton } = {}
@@ -452,9 +499,9 @@ local function setCameraForView(): ()
 		focus = Vector3.new(0, 5, 0)
 		fieldOfView = 35
 	else
-		cameraPosition = Vector3.new(255, 265, 255)
-		focus = Vector3.new(18, 0, -24)
-		fieldOfView = 28
+		cameraPosition = Vector3.new(0, 285, 250)
+		focus = Vector3.new(0, 0, 0)
+		fieldOfView = 30
 	end
 
 	camera.CameraType = Enum.CameraType.Scriptable
@@ -477,6 +524,10 @@ local function refreshActionVisibility(): ()
 		button.Visible = view == "Both" or view == viewMode
 	end
 	modeButton.Text = if viewMode == "Kingdom" then "Abrir Mundo" else "Voltar ao Reino"
+	actionBar.Visible = viewMode == "Kingdom"
+	summaryPanel.Visible = viewMode == "Kingdom"
+	constructionPanel.Visible = viewMode == "Kingdom"
+	worldInfoPanel.Visible = viewMode == "World"
 end
 
 local function setViewMode(nextView: ViewMode): ()
@@ -485,6 +536,13 @@ local function setViewMode(nextView: ViewMode): ()
 	setCharacterVisible(viewMode == "Kingdom")
 	setCameraForView()
 	refreshActionVisibility()
+	if viewMode == "Kingdom" then
+		selectionBox.Visible = false
+	else
+		worldInfoTitle.Text = "Mapa Mundial"
+		worldInfoText.Text =
+			"Clique em um tile, recurso, acampamento ou castelo.\nAções de marcha ficam bloqueadas até a próxima fase."
+	end
 end
 
 local function updateBuildButtons(state: any): ()
@@ -544,6 +602,88 @@ local function updateConstructionPanel(): ()
 	end
 
 	constructionText.Text = table.concat(lines, "\n")
+end
+
+local function findWorldSelectable(target: Instance?): BasePart?
+	local current = target
+	while current do
+		if current:IsA("BasePart") and current:GetAttribute("WorldSelectable") == true then
+			return current
+		end
+		current = current.Parent
+	end
+
+	return nil
+end
+
+local function getWorldTypeLabel(worldType: string?): string
+	if worldType == "playerCastle" then
+		return "Castelo"
+	elseif worldType == "resource" then
+		return "Recurso"
+	elseif worldType == "npcCamp" then
+		return "Acampamento NPC"
+	elseif worldType == "tile" then
+		return "Terreno"
+	end
+
+	return "Ponto do mapa"
+end
+
+local function getBiomeLabel(biome: string?): string
+	if biome == "plains" then
+		return "Planicie"
+	elseif biome == "forest" then
+		return "Floresta"
+	elseif biome == "mountain" then
+		return "Montanha"
+	end
+
+	return "Indefinido"
+end
+
+local function updateWorldInfo(selection: BasePart?): ()
+	if selection == nil then
+		selectionBox.Visible = false
+		worldInfoTitle.Text = "Mapa Mundial"
+		worldInfoText.Text =
+			"Clique em um tile, recurso, acampamento ou castelo.\nAções de marcha ficam bloqueadas até a próxima fase."
+		return
+	end
+
+	selectionBox.Adornee = selection
+	selectionBox.Visible = true
+
+	local worldName = selection:GetAttribute("WorldName") or selection.Name
+	local worldType = selection:GetAttribute("WorldType")
+	local worldLevel = selection:GetAttribute("WorldLevel") or 1
+	local x = selection:GetAttribute("WorldX") or 0
+	local y = selection:GetAttribute("WorldY") or 0
+	local biome = selection:GetAttribute("Biome")
+	local resource = selection:GetAttribute("Resource")
+	local amount = selection:GetAttribute("ResourceAmount")
+	local enemyId = selection:GetAttribute("EnemyId")
+	local action = selection:GetAttribute("WorldAction") or "Futuro: marchas ainda bloqueadas"
+
+	worldInfoTitle.Text = tostring(worldName)
+
+	local lines = {
+		`Tipo: {getWorldTypeLabel(worldType)}`,
+		`Nivel: {worldLevel}   Coordenada: {x}, {y}`,
+	}
+
+	if biome then
+		table.insert(lines, `Bioma: {getBiomeLabel(biome)}`)
+	end
+	if resource then
+		table.insert(lines, `Recurso: {resourceNames[resource] or resource}   Quantidade: {formatAmount(amount)}`)
+	end
+	if enemyId then
+		table.insert(lines, `Inimigo: {enemyId}`)
+	end
+
+	table.insert(lines, tostring(action))
+	worldInfoText.Text = table.concat(lines, "\n")
 end
 
 local function updateHud(state: any): ()
@@ -722,6 +862,14 @@ end)
 
 popupClose.Activated:Connect(function()
 	popup.Visible = false
+end)
+
+mouse.Button1Down:Connect(function()
+	if viewMode ~= "World" then
+		return
+	end
+
+	updateWorldInfo(findWorldSelectable(mouse.Target))
 end)
 
 StateSnapshot.OnClientEvent:Connect(updateHud)

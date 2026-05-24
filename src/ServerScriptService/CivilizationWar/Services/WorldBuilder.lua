@@ -21,6 +21,8 @@ local function normalizeViewLayer(value: any, fallback: string): string
 		return "Kingdom"
 	elseif lowered == "shared" or lowered == "ambos" then
 		return "Shared"
+	elseif lowered == "legacyworld" or lowered == "legacy_world" then
+		return "LegacyWorld"
 	end
 
 	return fallback
@@ -256,12 +258,12 @@ function WorldBuilder.Build(mapId: string?): Folder
 
 	local resourcesFolder = Instance.new("Folder")
 	resourcesFolder.Name = "ResourceNodes"
-	resourcesFolder:SetAttribute("ViewLayer", "World")
+	resourcesFolder:SetAttribute("ViewLayer", "LegacyWorld")
 	resourcesFolder.Parent = root
 
 	local campsFolder = Instance.new("Folder")
 	campsFolder.Name = "NpcCamps"
-	campsFolder:SetAttribute("ViewLayer", "World")
+	campsFolder:SetAttribute("ViewLayer", "LegacyWorld")
 	campsFolder.Parent = root
 
 	local npcsFolder = Instance.new("Folder")
@@ -271,7 +273,7 @@ function WorldBuilder.Build(mapId: string?): Folder
 
 	local wondersFolder = Instance.new("Folder")
 	wondersFolder.Name = "Wonders"
-	wondersFolder:SetAttribute("ViewLayer", "World")
+	wondersFolder:SetAttribute("ViewLayer", "LegacyWorld")
 	wondersFolder.Parent = root
 
 	local decorationsFolder = Instance.new("Folder")
@@ -314,14 +316,15 @@ function WorldBuilder.Build(mapId: string?): Folder
 	end
 
 	for _, node in ipairs(map.resourceNodes or {}) do
-		local model = WorldBuilder.CreatePrefab(node.prefab, resourcesFolder, node.position, nil, node.id, "World")
+		local model =
+			WorldBuilder.CreatePrefab(node.prefab, resourcesFolder, node.position, nil, node.id, "LegacyWorld")
 		model:SetAttribute("Resource", node.resource)
 		model:SetAttribute("ResourceAmount", node.amount)
 		model:SetAttribute("NodeLevel", node.level)
 	end
 
 	for _, camp in ipairs(map.npcCamps or {}) do
-		local model = WorldBuilder.CreatePrefab(camp.prefab, campsFolder, camp.position, nil, camp.id, "World")
+		local model = WorldBuilder.CreatePrefab(camp.prefab, campsFolder, camp.position, nil, camp.id, "LegacyWorld")
 		model:SetAttribute("EnemyId", camp.enemyId)
 		attachAttackPrompt(model, camp.enemyId)
 	end
@@ -331,7 +334,8 @@ function WorldBuilder.Build(mapId: string?): Folder
 	end
 
 	for _, wonder in ipairs(map.wonders or {}) do
-		local model = WorldBuilder.CreatePrefab(wonder.prefab, wondersFolder, wonder.position, nil, wonder.id, "World")
+		local model =
+			WorldBuilder.CreatePrefab(wonder.prefab, wondersFolder, wonder.position, nil, wonder.id, "LegacyWorld")
 		model:SetAttribute("EnemyId", wonder.enemyId)
 		model:SetAttribute("CaptureRadius", wonder.captureRadius)
 		attachAttackPrompt(model, wonder.enemyId)
